@@ -40,7 +40,7 @@ public class Window {
         glfwShowWindow(windowHandle);
     }
 
-    private void loop(){
+    public void start(){
         GL.createCapabilities();
         glClearColor(0.f, 0.f, 0.f, 0.f);
 
@@ -64,7 +64,6 @@ public class Window {
 
         initGLFW();
         initWindow();
-        loop();
     }
 
 }

@@ -6,12 +6,48 @@ import com.AlicornLunaa.CellularSimulation.util.Vector2;
 public class Cell {
 
     // Variables
-    String name;
-    String description;
-    float charge;
-    float mass;
-    Color color;
-    Vector2 velocity;
+    private String name;
+    private String description;
+    private float charge;
+    private float mass;
+    private Color color;
+    private Vector2 velocity;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public float getCharge() {
+        return charge;
+    }
+
+    public void setCharge(float charge) {
+        this.charge = charge;
+    }
+
+    public float getMass() {
+        return mass;
+    }
+
+    public void setMass(float mass) {
+        this.mass = mass;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
 
     // Constructor
     public Cell(String name, String description, float charge, float mass){
@@ -25,7 +61,7 @@ public class Cell {
     }
 
     // Static functions
-    static Cell getEmpty(){ return new Cell("Empty", "", 0.f, 0.f); }
-    static Cell getDebug(){ return new Cell("Debug", "Used to testing", 1.f, 1.f); }
+    static public Cell getEmpty(){ return new Cell("Empty", "", 0.f, 0.f); }
+    static public Cell getDebug(){ return new Cell("Debug", "Used to testing", 1.f, 1.f); }
 
 }

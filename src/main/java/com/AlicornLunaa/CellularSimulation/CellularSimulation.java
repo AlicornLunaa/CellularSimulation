@@ -1,6 +1,6 @@
 package com.AlicornLunaa.CellularSimulation;
 
-import com.AlicornLunaa.CellularSimulation.gameplay.World;
+import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
 
 public class CellularSimulation extends Window {
@@ -19,14 +19,15 @@ public class CellularSimulation extends Window {
     public void render(){
         // Draw the grid
 
-        // Draw all the cells
 
+        // Draw all the cells
     }
 
     // Constructor
     public CellularSimulation(){
         super("Cellular Simulation", 1440, 810);
-        world = new World(50);
+        world = new World(5);
+        super.start();
     }
 
     // Entry
