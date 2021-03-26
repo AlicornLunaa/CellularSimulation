@@ -1,8 +1,12 @@
 package com.AlicornLunaa.CellularSimulation;
 
+import com.AlicornLunaa.CellularSimulation.gameplay.World;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
 
 public class CellularSimulation extends Window {
+
+    // Variables
+    World world;
 
     // Functions
     @Override
@@ -22,6 +26,7 @@ public class CellularSimulation extends Window {
     // Constructor
     public CellularSimulation(){
         super("Cellular Simulation", 1440, 810);
+        world = new World(50);
     }
 
     // Entry
