@@ -57,7 +57,7 @@ public class Cell {
         this.mass = mass;
 
         this.color = new Color(255, 255, 255);
-        this.velocity = new Vector3(0.f, 0.f);
+        this.velocity = new Vector3(0.f, 0.f, 0.f);
     }
 
     // Static functions

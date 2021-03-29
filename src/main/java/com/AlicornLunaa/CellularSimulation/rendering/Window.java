@@ -38,10 +38,11 @@ public class Window {
         glfwMakeContextCurrent(windowHandle);
         glfwSwapInterval(1);
         glfwShowWindow(windowHandle);
+
+        GL.createCapabilities();
     }
 
     public void start(){
-        GL.createCapabilities();
         glClearColor(0.f, 0.f, 0.f, 0.f);
 
         while(!glfwWindowShouldClose(windowHandle)){

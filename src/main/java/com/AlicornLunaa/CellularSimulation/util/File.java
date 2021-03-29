@@ -1,5 +1,7 @@
 package com.AlicornLunaa.CellularSimulation.util;
 
+import com.AlicornLunaa.CellularSimulation.CellularSimulation;
+
 import java.io.*;
 
 public final class File {
@@ -10,7 +12,7 @@ public final class File {
         String res = "";
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(path));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(CellularSimulation.class.getResourceAsStream(path)));
             String buffer = "";
 
             while ((buffer = reader.readLine()) != null) {

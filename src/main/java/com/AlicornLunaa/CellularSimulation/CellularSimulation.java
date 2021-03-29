@@ -2,10 +2,12 @@ package com.AlicornLunaa.CellularSimulation;
 
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
+import com.AlicornLunaa.CellularSimulation.util.File;
 
 public class CellularSimulation extends Window {
 
     // Variables
+    Shader shader;
     World world;
 
     // Functions
@@ -26,7 +28,10 @@ public class CellularSimulation extends Window {
     // Constructor
     public CellularSimulation(){
         super("Cellular Simulation", 1440, 810);
+
+        shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
         world = new World(5);
+
         super.start();
     }
 
