@@ -4,6 +4,8 @@ import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
 import com.AlicornLunaa.CellularSimulation.util.*;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 public class CellularSimulation extends Window {
 
     // Variables
@@ -15,7 +17,19 @@ public class CellularSimulation extends Window {
     @Override
     public void keypress(int key, int scancode, int action, int mods){
         // Handle clicks
-
+        if(key == GLFW_KEY_A){
+            camera.position.x += 5.f;
+        } else if(key == GLFW_KEY_D){
+            camera.position.x -= 5.f;
+        } else if(key == GLFW_KEY_W){
+            camera.position.y += 5.f;
+        } else if(key == GLFW_KEY_S){
+            camera.position.y -= 5.f;
+        } else if(key == GLFW_KEY_Q){
+            camera.zoom += 0.1f;
+        } else if(key == GLFW_KEY_E){
+            camera.zoom -= 0.1f;
+        }
     }
 
     @Override
