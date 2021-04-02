@@ -3,6 +3,7 @@ package com.AlicornLunaa.CellularSimulation;
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
 import com.AlicornLunaa.CellularSimulation.util.*;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -36,7 +37,10 @@ public class CellularSimulation extends Window {
     @Override
     public void render(){
         // Inputs
-        cursor.setPosition(new Vector3f(Input.getCursorPosition(windowHandle).sub(2.5f, 2.5f), 0.f));
+        Vector2f pos = Input.getCursorPosition(windowHandle);
+        pos.x = (float)((int)pos.x / 11) * 11;
+        pos.y = (float)((int)pos.y / 11) * 11;
+        cursor.setPosition(new Vector3f(pos, 0.f));
 
         // Cell render
         world.getShader().use();
@@ -57,8 +61,8 @@ public class CellularSimulation extends Window {
         gui = new Gui(width, height);
         world = new World(width, height,50);
 
-        cursor = new Rectangle(0, 0, 5, 5);
-        cursor.color = new Color(255, 0, 0);
+        cursor = new Rectangle(0, 0, 10, 10);
+        cursor.color = new Color(255, 0, 255);
 
         super.start();
     }
