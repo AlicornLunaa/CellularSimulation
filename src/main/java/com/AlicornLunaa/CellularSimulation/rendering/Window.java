@@ -10,10 +10,10 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class Window {
 
     // Variables
-    private String title;
-    private int width;
-    private int height;
-    private long windowHandle;
+    protected String title;
+    protected int width;
+    protected int height;
+    protected long windowHandle;
 
     // Functions
     public void keypress(int key, int scancode, int action, int mods){}

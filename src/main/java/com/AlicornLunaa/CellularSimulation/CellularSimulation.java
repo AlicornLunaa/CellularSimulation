@@ -3,15 +3,17 @@ package com.AlicornLunaa.CellularSimulation;
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
 import com.AlicornLunaa.CellularSimulation.util.*;
+import org.joml.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class CellularSimulation extends Window {
 
     // Variables
-    Shader shader;
-    World world;
-    Camera camera;
+    private Shader shader;
+    private World world;
+    private Camera camera;
+    private Rectangle cursor;
 
     // Functions
     @Override
@@ -34,10 +36,14 @@ public class CellularSimulation extends Window {
 
     @Override
     public void render(){
-        // Init render
+        // Inputs
+        cursor.setPosition(new Vector3f(camera.toView(Input.getCursorPosition(windowHandle).sub(2.5f, 2.5f)), 0.f));
+
+        // Cell render
         world.getShader().use();
         camera.use(world.getShader());
         world.draw();
+        cursor.draw(world.getShader());
         world.getShader().unuse();
     }
 
@@ -48,6 +54,9 @@ public class CellularSimulation extends Window {
         shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
         world = new World(50);
         camera = new Camera(1440, 810);
+
+        cursor = new Rectangle(0, 0, 5, 5);
+        cursor.color = new Color(255, 0, 0);
 
         super.start();
     }
