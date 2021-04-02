@@ -38,9 +38,13 @@ public class CellularSimulation extends Window {
     public void render(){
         // Inputs
         Vector2f pos = Input.getCursorPosition();
-        pos.x = (float)((int)pos.x / 11) * 11;
-        pos.y = (float)((int)pos.y / 11) * 11;
-        cursor.setPosition(new Vector3f(pos, 0.f));
+        int xSelect = ((int)pos.x / 11);
+        int ySelect = ((int)pos.y / 11);
+        cursor.setPosition(new Vector3f(xSelect * 11, ySelect * 11, 0.f));
+
+        if(glfwGetMouseButton(windowHandle, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
+            world.getCell(xSelect, ySelect).highlight(true);
+        }
 
         // Cell render
         world.getShader().use();

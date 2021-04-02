@@ -6,6 +6,9 @@ import org.joml.Vector2f;
 
 public class Cell {
 
+    // Static variables
+    public static final int SIZE = 10;
+
     // Variables
     private String name;
     private String description;
@@ -14,6 +17,9 @@ public class Cell {
     private Color color;
     private Vector2f velocity;
     private Rectangle shape;
+
+    private Color highlightedColor;
+    private boolean highlighted;
 
     public String getName() {
         return name;
@@ -40,7 +46,7 @@ public class Cell {
     }
 
     public Color getColor() {
-        return color;
+        return isHighlighted() ? highlightedColor : color;
     }
 
     public Vector2f getVelocity() {
@@ -53,6 +59,14 @@ public class Cell {
 
     public Rectangle getShape(){ return shape; }
 
+    public void highlight(boolean status){
+        highlighted = status;
+    }
+
+    public boolean isHighlighted(){
+        return highlighted;
+    }
+
     // Constructor
     public Cell(String name, String description, float charge, float mass){
         this.name = name;
@@ -60,10 +74,13 @@ public class Cell {
         this.charge = charge;
         this.mass = mass;
 
-        this.color = new Color(255, 255, 255);
-        this.velocity = new Vector2f(0.f, 0.f);
+        color = new Color(255, 255, 255);
+        velocity = new Vector2f(0.f, 0.f);
 
-        this.shape = new Rectangle(0.f, 0.f, 10.f, 10.f);
+        shape = new Rectangle(0.f, 0.f, SIZE, SIZE);
+
+        highlightedColor = new Color(127, 255, 0);
+        highlighted = false;
     }
 
     // Static functions

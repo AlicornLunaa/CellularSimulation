@@ -7,6 +7,9 @@ import com.AlicornLunaa.CellularSimulation.rendering.Shader;
 // Holds every cell
 public class World {
 
+    // Static variables
+    public static final float CELL_SPACING = 1.f;
+
     // Variables
     private CellRenderer renderer;
     private Camera worldCamera;
@@ -28,8 +31,10 @@ public class World {
     }
 
     public void setCell(int x, int y, Cell cell){
-        grid[x][y] = cell;
+        grid[y][x] = cell;
     }
+
+    public Cell getCell(int x, int y){ return grid[y][x]; }
 
     public void draw(){
         worldCamera.use(renderer.getShader());
