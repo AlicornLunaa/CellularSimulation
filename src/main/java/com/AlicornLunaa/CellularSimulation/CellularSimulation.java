@@ -2,13 +2,15 @@ package com.AlicornLunaa.CellularSimulation;
 
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
-import com.AlicornLunaa.CellularSimulation.util.File;
+import com.AlicornLunaa.CellularSimulation.util.*;
 
 public class CellularSimulation extends Window {
 
     // Variables
     Shader shader;
     World world;
+
+    Rectangle testShape;
 
     // Functions
     @Override
@@ -20,9 +22,12 @@ public class CellularSimulation extends Window {
     @Override
     public void render(){
         // Draw the grid
-
+        shader.use();
+        testShape.draw();
 
         // Draw all the cells
+
+        shader.unuse();
     }
 
     // Constructor
@@ -31,6 +36,8 @@ public class CellularSimulation extends Window {
 
         shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
         world = new World(5);
+
+        testShape = new Rectangle(0, 0, 1, 1);
 
         super.start();
     }

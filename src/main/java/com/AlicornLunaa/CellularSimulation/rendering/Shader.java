@@ -46,6 +46,8 @@ public class Shader {
         glUseProgram(0);
     }
 
+    public void setUniform()
+
     // Constructor
     public Shader(String vertex, String fragment){
         initProgram(vertex, fragment, "");
