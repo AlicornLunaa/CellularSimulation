@@ -22,11 +22,12 @@ public class CellularSimulation extends Window {
 
     @Override
     public void render(){
-        // Draw the grid
+        // Init render
         shader.use();
-
         camera.use(shader);
         testShape.draw(shader);
+
+        // Draw the grid
 
         // Draw all the cells
 
@@ -39,9 +40,9 @@ public class CellularSimulation extends Window {
 
         shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
         world = new World(5);
-        camera = new Camera();
+        camera = new Camera(1440, 810);
 
-        testShape = new Rectangle(0, 0, 1, 1);
+        testShape = new Rectangle(5, 5, 100, 100);
 
         super.start();
     }

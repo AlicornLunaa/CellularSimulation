@@ -4,6 +4,13 @@ package com.AlicornLunaa.CellularSimulation.rendering;
 
 public class CellRenderer {
 
+    // Variables
+    private Shader cellShader;
 
+    // Constructor
+    public CellRenderer(){
+        // Initialize shader
+        cellShader = new Shader("/shaders/cell.vs", "/shaders/cell.fs", "/shaders/cell.gs");
+    }
 
 }

@@ -20,11 +20,11 @@ public class Camera {
     }
 
     // Constructor
-    public Camera(){
+    public Camera(int width, int height){
         matrixBuffer = BufferUtils.createFloatBuffer(16);
 
         viewMatrix = new Matrix4f();
-        projMatrix = new Matrix4f().ortho(-10, 10, 10, -10, -10, 10);
+        projMatrix = new Matrix4f().ortho(0, width, height, 0, -10, 10);
     }
 
 }

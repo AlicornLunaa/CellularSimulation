@@ -3,7 +3,9 @@ package com.AlicornLunaa.CellularSimulation.rendering;
 import com.AlicornLunaa.CellularSimulation.util.*;
 
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -20,13 +22,14 @@ public class Rectangle {
     // Variables
     private FloatBuffer matrixBuffer;
     private Matrix4f modelMatrix;
-
     private int vao;
     private int vbo;
-    private Vector2f position;
-    private Vector2f rotation;
-    private Vector2f scale;
-    private Color color;
+
+    private Vector3f position = new Vector3f();
+    private Quaternionf orientation = new Quaternionf();
+    private Vector2f size = new Vector2f();
+
+    public Color color;
 
     // Functions
     private void initMatrix(){
@@ -57,6 +60,7 @@ public class Rectangle {
     }
 
     public void draw(Shader shader){
+        modelMatrix.translationRotateScale(position, orientation, new Vector3f(size, 1.f));
         shader.setUniform("modelMatrix", modelMatrix.get(matrixBuffer));
 
         glBindVertexArray(vao);
@@ -64,8 +68,30 @@ public class Rectangle {
         glBindVertexArray(0);
     }
 
+    // Setters
+    public void setPosition(Vector3f p){
+        position = p.add(new Vector3f(size.x / 2.f, size.y / 2.f, 0.f));
+    }
+
+    public void setRotation(Vector3f r){
+        orientation.rotateXYZ(r.x, r.y, r.z);
+    }
+
+    public void setSize(Vector2f s){
+        size = s;
+    }
+
+    // Getters
+    public Vector3f getPosition(){ return position; }
+    public Quaternionf getRotation(){ return orientation; }
+    public Vector2f getSize(){ return size; }
+
     // Constructors
     public Rectangle(float x, float y, float width, float height){
+        setSize(new Vector2f(width, height));
+        setPosition(new Vector3f(x, y, 0.f));
+        color = new Color(255, 127, 10);
+
         initMatrix();
         initObjectData();
     }
