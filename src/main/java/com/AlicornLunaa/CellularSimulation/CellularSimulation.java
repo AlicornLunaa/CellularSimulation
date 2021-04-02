@@ -37,7 +37,7 @@ public class CellularSimulation extends Window {
     @Override
     public void render(){
         // Inputs
-        Vector2f pos = Input.getCursorPosition(windowHandle);
+        Vector2f pos = Input.getCursorPosition();
         pos.x = (float)((int)pos.x / 11) * 11;
         pos.y = (float)((int)pos.y / 11) * 11;
         cursor.setPosition(new Vector3f(pos, 0.f));
@@ -58,6 +58,7 @@ public class CellularSimulation extends Window {
     public CellularSimulation(){
         super("Cellular Simulation", 1440, 810);
 
+        Input.init(windowHandle);
         gui = new Gui(width, height);
         world = new World(width, height,50);
 
