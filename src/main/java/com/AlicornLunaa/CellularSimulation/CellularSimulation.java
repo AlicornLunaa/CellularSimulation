@@ -9,6 +9,7 @@ public class CellularSimulation extends Window {
     // Variables
     Shader shader;
     World world;
+    Camera camera;
 
     Rectangle testShape;
 
@@ -23,7 +24,9 @@ public class CellularSimulation extends Window {
     public void render(){
         // Draw the grid
         shader.use();
-        testShape.draw();
+
+        camera.use(shader);
+        testShape.draw(shader);
 
         // Draw all the cells
 
@@ -36,6 +39,7 @@ public class CellularSimulation extends Window {
 
         shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
         world = new World(5);
+        camera = new Camera();
 
         testShape = new Rectangle(0, 0, 1, 1);
 

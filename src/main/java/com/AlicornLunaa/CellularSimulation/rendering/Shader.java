@@ -2,6 +2,8 @@ package com.AlicornLunaa.CellularSimulation.rendering;
 
 import com.AlicornLunaa.CellularSimulation.util.File;
 
+import java.nio.FloatBuffer;
+
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL32.*;
 
@@ -46,7 +48,10 @@ public class Shader {
         glUseProgram(0);
     }
 
-    public void setUniform()
+    public void setUniform(String attrib, FloatBuffer data){
+        int loc = glGetUniformLocation(program, attrib);
+        glUniformMatrix4fv(loc, false, data);
+    }
 
     // Constructor
     public Shader(String vertex, String fragment){

@@ -1,6 +1,7 @@
 package com.AlicornLunaa.CellularSimulation.rendering;
 
-import com.AlicornLunaa.CellularSimulation.util.Matrix4f;
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -8,20 +9,22 @@ import java.nio.FloatBuffer;
 public class Camera {
 
     // Variables
-    FloatBuffer matrixBuffer;
-    Matrix4f viewMatrix;
-    Matrix4f projMatrix;
+    private FloatBuffer matrixBuffer;
+    private Matrix4f viewMatrix;
+    private Matrix4f projMatrix;
 
     // Functions
     public void use(Shader shader){
-
+        shader.setUniform("viewMatrix", viewMatrix.get(matrixBuffer));
+        shader.setUniform("projMatrix", projMatrix.get(matrixBuffer));
     }
 
     // Constructor
     public Camera(){
         matrixBuffer = BufferUtils.createFloatBuffer(16);
 
-        projMatrix = Matrix4f.ortho(-10, 10, 10, -10, -10, 10);
+        viewMatrix = new Matrix4f();
+        projMatrix = new Matrix4f().ortho(-10, 10, 10, -10, -10, 10);
     }
 
 }

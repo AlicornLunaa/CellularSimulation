@@ -1,7 +1,7 @@
 package com.AlicornLunaa.CellularSimulation.gameplay;
 
 import com.AlicornLunaa.CellularSimulation.util.Color;
-import com.AlicornLunaa.CellularSimulation.util.Vector3;
+import org.joml.Vector2f;
 
 public class Cell {
 
@@ -11,7 +11,7 @@ public class Cell {
     private float charge;
     private float mass;
     private Color color;
-    private Vector3 velocity;
+    private Vector2f velocity;
 
     public String getName() {
         return name;
@@ -41,11 +41,11 @@ public class Cell {
         return color;
     }
 
-    public Vector3 getVelocity() {
+    public Vector2f getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(Vector3 velocity) {
+    public void setVelocity(Vector2f velocity) {
         this.velocity = velocity;
     }
 
@@ -57,7 +57,7 @@ public class Cell {
         this.mass = mass;
 
         this.color = new Color(255, 255, 255);
-        this.velocity = new Vector3(0.f, 0.f, 0.f);
+        this.velocity = new Vector2f(0.f, 0.f);
     }
 
     // Static functions
