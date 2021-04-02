@@ -38,6 +38,14 @@ public class Shader {
         glValidateProgram(program);
     }
 
+    public void use(){
+        glUseProgram(program);
+    }
+
+    public void unuse(){
+        glUseProgram(0);
+    }
+
     // Constructor
     public Shader(String vertex, String fragment){
         initProgram(vertex, fragment, "");
