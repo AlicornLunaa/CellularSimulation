@@ -1,5 +1,6 @@
 package com.AlicornLunaa.CellularSimulation.rendering;
 
+import com.AlicornLunaa.CellularSimulation.util.Color;
 import com.AlicornLunaa.CellularSimulation.util.File;
 
 import java.nio.FloatBuffer;
@@ -51,6 +52,11 @@ public class Shader {
     public void setUniform(String attrib, FloatBuffer data){
         int loc = glGetUniformLocation(program, attrib);
         glUniformMatrix4fv(loc, false, data);
+    }
+
+    public void setUniform(String attrib, Color color){
+        int loc = glGetUniformLocation(program, attrib);
+        glUniform3f(loc, color.r / 255.f, color.g / 255.f, color.b / 255.f);
     }
 
     // Constructor

@@ -16,6 +16,7 @@ public class CellRenderer {
         for(int x = 0; x < grid[0].length; x++){
             for(int y = 0; y < grid.length; y++){
                 grid[y][x].getShape().setPosition(new Vector3f(x * 11, y * 11, 0.f));
+                grid[y][x].getShape().color = grid[y][x].getColor();
                 grid[y][x].getShape().draw(cellShader);
             }
         }
@@ -28,8 +29,7 @@ public class CellRenderer {
     // Constructor
     public CellRenderer(){
         // Initialize shader
-        //cellShader = new Shader("/shaders/cell.vs", "/shaders/cell.fs", "/shaders/cell.gs");
-        cellShader = new Shader("/shaders/default.vs", "/shaders/default.fs");
+        cellShader = new Shader("/shaders/cell.vs", "/shaders/cell.fs");
     }
 
 }

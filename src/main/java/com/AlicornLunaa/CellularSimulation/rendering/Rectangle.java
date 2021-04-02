@@ -62,6 +62,7 @@ public class Rectangle {
     public void draw(Shader shader){
         modelMatrix.translationRotateScale(position, orientation, new Vector3f(size, 1.f));
         shader.setUniform("modelMatrix", modelMatrix.get(matrixBuffer));
+        shader.setUniform("color", color);
 
         glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 3 * 2);

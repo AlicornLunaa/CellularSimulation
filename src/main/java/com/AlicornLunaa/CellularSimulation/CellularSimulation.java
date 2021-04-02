@@ -32,7 +32,7 @@ public class CellularSimulation extends Window {
         super("Cellular Simulation", 1440, 810);
 
         shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
-        world = new World(5);
+        world = new World(50);
         camera = new Camera(1440, 810);
 
         super.start();

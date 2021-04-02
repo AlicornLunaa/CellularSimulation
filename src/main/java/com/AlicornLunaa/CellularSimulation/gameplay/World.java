@@ -11,14 +11,18 @@ public class World {
     private Cell[][] grid;
 
     // Functions
-    public void render(){
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+
         for(int x = 0; x < grid[0].length; x++){
             for(int y = 0; y < grid.length; y++){
-                System.out.print(grid[y][x].getName() + " ");
+                s.append(grid[y][x].getName()).append(" ");
             }
 
-            System.out.println();
+            s.append("\n");
         }
+
+        return s.toString();
     }
 
     public void setCell(int x, int y, Cell cell){
