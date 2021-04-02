@@ -29,8 +29,8 @@ public class Camera {
 
     public Vector2f toView(Vector2f v) {
         // Returns the vector with the current camera
-        Matrix4f matrix = new Matrix4f(viewMatrix);
-        matrix = matrix.invert();
+        Matrix4f matrix = new Matrix4f(projMatrix);
+        matrix.mul(viewMatrix);
 
         Vector4f v4 = new Vector4f(v, 0.f, 0.f);
         v4.mul(matrix);

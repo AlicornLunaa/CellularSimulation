@@ -69,6 +69,11 @@ public class Rectangle {
         glBindVertexArray(0);
     }
 
+    public boolean intersects(Vector2f v){
+        // Returns true or false depending on if the position supplied is intersecting
+        return Collision.AABB(new Vector2f(position.x, position.y), size, v);
+    }
+
     // Setters
     public void setPosition(Vector3f p){
         position = p.add(new Vector3f(size.x / 2.f, size.y / 2.f, 0.f));

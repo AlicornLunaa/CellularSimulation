@@ -3,6 +3,7 @@ package com.AlicornLunaa.CellularSimulation.rendering;
 // Draws all the cells using instancing since they'll all share the same shape
 
 import com.AlicornLunaa.CellularSimulation.gameplay.Cell;
+import com.AlicornLunaa.CellularSimulation.util.Input;
 import org.joml.Vector3f;
 
 public class CellRenderer {

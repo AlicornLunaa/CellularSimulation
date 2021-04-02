@@ -10,7 +10,7 @@ import static org.lwjgl.glfw.GLFW.*;
 public class CellularSimulation extends Window {
 
     // Variables
-    private Shader shader;
+    private Gui gui;
     private World world;
     private Camera camera;
     private Rectangle cursor;
@@ -37,23 +37,27 @@ public class CellularSimulation extends Window {
     @Override
     public void render(){
         // Inputs
-        cursor.setPosition(new Vector3f(camera.toView(Input.getCursorPosition(windowHandle).sub(2.5f, 2.5f)), 0.f));
+        cursor.setPosition(new Vector3f(Input.getCursorPosition(windowHandle).sub(2.5f, 2.5f), 0.f));
+        System.out.println(cursor.intersects(Input.getCursorPosition(windowHandle)));
 
         // Cell render
         world.getShader().use();
-        camera.use(world.getShader());
         world.draw();
-        cursor.draw(world.getShader());
         world.getShader().unuse();
+
+        // GUI render
+        gui.getShader().use();
+        gui.draw();
+        gui.getShader().unuse();
     }
 
     // Constructor
     public CellularSimulation(){
         super("Cellular Simulation", 1440, 810);
 
-        shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
-        world = new World(50);
-        camera = new Camera(1440, 810);
+        gui = new Gui(width, height);
+        world = new World(width, height,50);
+        camera = new Camera(width, height);
 
         cursor = new Rectangle(0, 0, 5, 5);
         cursor.color = new Color(255, 0, 0);
