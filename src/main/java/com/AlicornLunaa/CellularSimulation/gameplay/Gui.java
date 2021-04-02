@@ -21,13 +21,14 @@ public class Gui {
     }
 
     public void draw(){
-
+        guiCamera.use(guiShader);
     }
 
     // Constructor
     public Gui(int width, int height){
         // Initialize
         guiShader = new Shader("/shaders/gui.vs", "/shaders/gui.fs");
+        guiCamera = new Camera(width, height);
 
         this.width = width;
         this.height = height;

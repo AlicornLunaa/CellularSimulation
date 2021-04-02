@@ -12,7 +12,6 @@ public class CellularSimulation extends Window {
     // Variables
     private Gui gui;
     private World world;
-    private Camera camera;
     private Rectangle cursor;
 
     // Functions
@@ -20,17 +19,17 @@ public class CellularSimulation extends Window {
     public void keypress(int key, int scancode, int action, int mods){
         // Handle clicks
         if(key == GLFW_KEY_A){
-            camera.position.x += 5.f;
+            world.getCamera().position.x += 5.f;
         } else if(key == GLFW_KEY_D){
-            camera.position.x -= 5.f;
+            world.getCamera().position.x -= 5.f;
         } else if(key == GLFW_KEY_W){
-            camera.position.y += 5.f;
+            world.getCamera().position.y += 5.f;
         } else if(key == GLFW_KEY_S){
-            camera.position.y -= 5.f;
+            world.getCamera().position.y -= 5.f;
         } else if(key == GLFW_KEY_Q){
-            camera.zoom += 0.1f;
+            world.getCamera().zoom += 0.1f;
         } else if(key == GLFW_KEY_E){
-            camera.zoom -= 0.1f;
+            world.getCamera().zoom -= 0.1f;
         }
     }
 
@@ -38,7 +37,6 @@ public class CellularSimulation extends Window {
     public void render(){
         // Inputs
         cursor.setPosition(new Vector3f(Input.getCursorPosition(windowHandle).sub(2.5f, 2.5f), 0.f));
-        System.out.println(cursor.intersects(Input.getCursorPosition(windowHandle)));
 
         // Cell render
         world.getShader().use();
@@ -48,6 +46,7 @@ public class CellularSimulation extends Window {
         // GUI render
         gui.getShader().use();
         gui.draw();
+        cursor.draw(gui.getShader());
         gui.getShader().unuse();
     }
 
@@ -57,7 +56,6 @@ public class CellularSimulation extends Window {
 
         gui = new Gui(width, height);
         world = new World(width, height,50);
-        camera = new Camera(width, height);
 
         cursor = new Rectangle(0, 0, 5, 5);
         cursor.color = new Color(255, 0, 0);
