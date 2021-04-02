@@ -1,5 +1,6 @@
 package com.AlicornLunaa.CellularSimulation.gameplay;
 
+import com.AlicornLunaa.CellularSimulation.rendering.Rectangle;
 import com.AlicornLunaa.CellularSimulation.util.Color;
 import org.joml.Vector2f;
 
@@ -12,6 +13,7 @@ public class Cell {
     private float mass;
     private Color color;
     private Vector2f velocity;
+    private Rectangle shape;
 
     public String getName() {
         return name;
@@ -49,6 +51,8 @@ public class Cell {
         this.velocity = velocity;
     }
 
+    public Rectangle getShape(){ return shape; }
+
     // Constructor
     public Cell(String name, String description, float charge, float mass){
         this.name = name;
@@ -58,6 +62,8 @@ public class Cell {
 
         this.color = new Color(255, 255, 255);
         this.velocity = new Vector2f(0.f, 0.f);
+
+        this.shape = new Rectangle(0.f, 0.f, 10.f, 10.f);
     }
 
     // Static functions

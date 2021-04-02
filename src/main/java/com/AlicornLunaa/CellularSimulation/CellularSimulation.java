@@ -11,8 +11,6 @@ public class CellularSimulation extends Window {
     World world;
     Camera camera;
 
-    Rectangle testShape;
-
     // Functions
     @Override
     public void keypress(int key, int scancode, int action, int mods){
@@ -23,15 +21,10 @@ public class CellularSimulation extends Window {
     @Override
     public void render(){
         // Init render
-        shader.use();
-        camera.use(shader);
-        testShape.draw(shader);
-
-        // Draw the grid
-
-        // Draw all the cells
-
-        shader.unuse();
+        world.getShader().use();
+        camera.use(world.getShader());
+        world.draw();
+        world.getShader().unuse();
     }
 
     // Constructor
@@ -41,8 +34,6 @@ public class CellularSimulation extends Window {
         shader = new Shader("/shaders/default.vs", "/shaders/default.fs");
         world = new World(5);
         camera = new Camera(1440, 810);
-
-        testShape = new Rectangle(5, 5, 100, 100);
 
         super.start();
     }
