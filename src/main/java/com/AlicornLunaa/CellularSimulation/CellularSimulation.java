@@ -53,6 +53,14 @@ public class CellularSimulation extends Window {
                     });
                     break;
 
+                case GLFW_KEY_DELETE:
+                    world.loopCells((int x, int y, Cell c) -> {
+                        if(c.isHighlighted()){
+                            c.highlight(false);
+                            world.setCell(x, y, Cell.getEmpty());
+                        }
+                    });
+
                 case GLFW_KEY_SPACE:
                     world.step();
                     break;

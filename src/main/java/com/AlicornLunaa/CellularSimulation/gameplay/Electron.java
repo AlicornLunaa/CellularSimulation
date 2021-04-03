@@ -12,7 +12,7 @@ public class Electron extends Cell {
 
     // Constructor
     public Electron() {
-        super("Electron", "Basic elementary particle", -1.f, 1, new Color(255, 0, 0));
+        super("Electron", "Basic elementary particle", -1.f, 1, new Color(255, 0, 0), CellType.ELECTRON);
     }
 
 }

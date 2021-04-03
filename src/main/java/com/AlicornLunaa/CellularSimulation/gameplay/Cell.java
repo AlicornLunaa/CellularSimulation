@@ -8,7 +8,7 @@ public class Cell {
 
     // Static variables
     public static final int SIZE = 10;
-    public enum CellType { ELECTRON, NEUTRON, PROTON };
+    public enum CellType { EMPTY, ELECTRON, NEUTRON, PROTON };
 
     // Variables
     private String name;
@@ -74,13 +74,13 @@ public class Cell {
     public CellType getType(){ return type; }
 
     // Constructor
-    public Cell(String name, String description, float charge, float mass, Color color){
+    public Cell(String name, String description, float charge, float mass, Color color, CellType type){
         this.name = name;
         this.description = description;
         this.charge = charge;
         this.mass = mass;
         this.color = color;
-        this.type = CellType.ELECTRON;
+        this.type = type;
 
         velocity = new Vector2i(0, 0);
 
@@ -91,8 +91,8 @@ public class Cell {
     }
 
     // Static functions
-    static public Cell getEmpty(){ return new Cell("Empty", "", 0.f, 0.f, new Color(50, 50, 50)); }
-    static public Cell getNeutron(){ return new Cell("Neutron", "Basic neutron", 0.f, 1.f, new Color(255, 255, 255)); }
-    static public Cell getProton(){ return new Cell("Proton", "Basic proton", 1.f, 1.f, new Color(0, 255, 0)); }
+    static public Cell getEmpty(){ return new Cell("Empty", "", 0.f, 0.f, new Color(50, 50, 50), CellType.EMPTY); }
+    static public Cell getNeutron(){ return new Cell("Neutron", "Basic neutron", 0.f, 1.f, new Color(255, 255, 255), CellType.NEUTRON); }
+    static public Cell getProton(){ return new Cell("Proton", "Basic proton", 1.f, 1.f, new Color(0, 255, 0), CellType.PROTON); }
 
 }
