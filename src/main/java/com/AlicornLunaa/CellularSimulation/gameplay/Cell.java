@@ -8,6 +8,7 @@ public class Cell {
 
     // Static variables
     public static final int SIZE = 10;
+    public enum CellType { ELECTRON, NEUTRON, PROTON };
 
     // Variables
     private String name;
@@ -17,6 +18,7 @@ public class Cell {
     protected float mass;
     protected Vector2i velocity;
     private Rectangle shape;
+    private CellType type;
 
     private Color highlightedColor;
     private boolean highlighted;
@@ -69,7 +71,7 @@ public class Cell {
         return highlighted;
     }
 
-    public void step(World world, int x, int y){}
+    public CellType getType(){ return type; }
 
     // Constructor
     public Cell(String name, String description, float charge, float mass, Color color){
@@ -78,6 +80,7 @@ public class Cell {
         this.charge = charge;
         this.mass = mass;
         this.color = color;
+        this.type = CellType.ELECTRON;
 
         velocity = new Vector2i(0, 0);
 
