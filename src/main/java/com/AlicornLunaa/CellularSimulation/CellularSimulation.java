@@ -61,6 +61,14 @@ public class CellularSimulation extends Window {
                         }
                     });
 
+                case GLFW_KEY_M:
+                    world.loopCells((int x, int y, Cell c) -> {
+                        if(c.isHighlighted()){
+                            c.highlight(false);
+                            world.setCell(x, y, new Molecule(2, 2, 2));
+                        }
+                    });
+
                 case GLFW_KEY_SPACE:
                     world.step();
                     break;

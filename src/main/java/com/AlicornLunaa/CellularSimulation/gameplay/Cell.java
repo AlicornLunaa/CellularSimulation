@@ -1,6 +1,7 @@
 package com.AlicornLunaa.CellularSimulation.gameplay;
 
 import com.AlicornLunaa.CellularSimulation.rendering.Rectangle;
+import com.AlicornLunaa.CellularSimulation.rendering.Shader;
 import com.AlicornLunaa.CellularSimulation.util.Color;
 import org.joml.Vector2i;
 
@@ -72,6 +73,11 @@ public class Cell {
     }
 
     public CellType getType(){ return type; }
+
+    public void draw(Shader shader){
+        shape.color = getColor();
+        shape.draw(shader);
+    }
 
     // Constructor
     public Cell(String name, String description, float charge, float mass, Color color, CellType type){

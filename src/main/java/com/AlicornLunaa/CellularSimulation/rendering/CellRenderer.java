@@ -18,8 +18,7 @@ public class CellRenderer {
         for(int x = 0; x < grid[0].length; x++){
             for(int y = 0; y < grid.length; y++){
                 grid[y][x].getShape().setPosition(new Vector3f(x * (Cell.SIZE + World.CELL_SPACING), y * (Cell.SIZE + World.CELL_SPACING), 0.f));
-                grid[y][x].getShape().color = grid[y][x].getColor();
-                grid[y][x].getShape().draw(cellShader);
+                grid[y][x].draw(cellShader);
             }
         }
     }
