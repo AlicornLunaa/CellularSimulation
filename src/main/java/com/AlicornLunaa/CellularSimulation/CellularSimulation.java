@@ -19,7 +19,41 @@ public class CellularSimulation extends Window {
     // Functions
     @Override
     public void keypress(int key, int scancode, int action, int mods){
+        /* Cell actions
+        E: Sets all selected to electrons
+        N: Sets all selected to neutrons
+        P: Sets all selected to protons
+         */
+        if(action == GLFW_PRESS){
+            switch(key){
+                case GLFW_KEY_E:
+                    world.loopCells((int x, int y, Cell c) -> {
+                        if(c.isHighlighted()){
+                            c.highlight(false);
+                            world.setCell(x, y, Cell.getElectron());
+                        }
+                    });
+                    break;
 
+                case GLFW_KEY_N:
+                    world.loopCells((int x, int y, Cell c) -> {
+                        if(c.isHighlighted()){
+                            c.highlight(false);
+                            world.setCell(x, y, Cell.getNeutron());
+                        }
+                    });
+                    break;
+
+                case GLFW_KEY_P:
+                    world.loopCells((int x, int y, Cell c) -> {
+                        if(c.isHighlighted()){
+                            c.highlight(false);
+                            world.setCell(x, y, Cell.getProton());
+                        }
+                    });
+                    break;
+            }
+        }
     }
 
     @Override

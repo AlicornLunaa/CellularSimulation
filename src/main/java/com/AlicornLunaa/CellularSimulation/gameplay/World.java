@@ -3,6 +3,8 @@ package com.AlicornLunaa.CellularSimulation.gameplay;
 import com.AlicornLunaa.CellularSimulation.rendering.Camera;
 import com.AlicornLunaa.CellularSimulation.rendering.CellRenderer;
 import com.AlicornLunaa.CellularSimulation.rendering.Shader;
+import com.AlicornLunaa.CellularSimulation.util.CellLoopCallback;
+import org.joml.Vector3f;
 
 // Holds every cell
 public class World {
@@ -35,6 +37,14 @@ public class World {
     }
 
     public Cell getCell(int x, int y){ return grid[y][x]; }
+
+    public void loopCells(CellLoopCallback func){
+        for(int x = 0; x < grid[0].length; x++){
+            for(int y = 0; y < grid.length; y++){
+                func.invoke(x, y, grid[y][x]);
+            }
+        }
+    }
 
     public void draw(){
         worldCamera.use(renderer.getShader());
