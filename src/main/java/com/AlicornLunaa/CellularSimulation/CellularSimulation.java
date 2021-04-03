@@ -19,20 +19,7 @@ public class CellularSimulation extends Window {
     // Functions
     @Override
     public void keypress(int key, int scancode, int action, int mods){
-        // Handle clicks
-        if(key == GLFW_KEY_A){
-            world.getCamera().position.x += 5.f;
-        } else if(key == GLFW_KEY_D){
-            world.getCamera().position.x -= 5.f;
-        } else if(key == GLFW_KEY_W){
-            world.getCamera().position.y += 5.f;
-        } else if(key == GLFW_KEY_S){
-            world.getCamera().position.y -= 5.f;
-        } else if(key == GLFW_KEY_Q){
-            world.getCamera().zoom += 0.1f;
-        } else if(key == GLFW_KEY_E){
-            world.getCamera().zoom -= 0.1f;
-        }
+
     }
 
     @Override
@@ -45,6 +32,8 @@ public class CellularSimulation extends Window {
 
         if(glfwGetMouseButton(windowHandle, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
             world.getCell(xSelect, ySelect).highlight(true);
+        } else if(glfwGetMouseButton(windowHandle, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
+            world.getCell(xSelect, ySelect).highlight(false);
         }
 
         // Cell render
@@ -68,7 +57,7 @@ public class CellularSimulation extends Window {
         gui = new Gui(width, height);
         world = new World(width, height,50);
 
-        tex = new Texture("/textures/test.png");
+        tex = new Texture("/textures/cursor.png");
         cursor = new Rectangle(0, 0, 10, 10);
         cursor.color = new Color(255, 0, 100);
 
