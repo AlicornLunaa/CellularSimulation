@@ -46,6 +46,23 @@ public class World {
         grid[y2][x2] = temp;
     }
 
+    public Cell[] getSurrounding(int x, int y, int range){
+        Cell[] surrounding = new Cell[range * range];
+
+        int i = 0;
+        for(int rX = -range/2; rX < range/2 + 1; rX++) for(int rY = -range/2; rY < range/2 + 1; rY++){
+            if(x + rX < 0 || y + rY < 0 || x + rX > grid[0].length || y + rY > grid.length){
+                surrounding[i] = null;
+            } else {
+                surrounding[i] = grid[y + rY][x + rX];
+            }
+
+            i++;
+        }
+
+        return surrounding;
+    }
+
     public void loopCells(CellLoopCallback func){
         for(int x = 0; x < grid[0].length; x++){
             for(int y = 0; y < grid.length; y++){

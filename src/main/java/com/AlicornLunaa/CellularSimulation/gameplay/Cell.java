@@ -12,10 +12,10 @@ public class Cell {
     // Variables
     private String name;
     private String description;
-    private float charge;
-    private float mass;
     private Color color;
-    private Vector2f velocity;
+    protected float charge;
+    protected float mass;
+    protected Vector2f velocity;
     private Rectangle shape;
 
     private Color highlightedColor;
@@ -69,6 +69,8 @@ public class Cell {
         return highlighted;
     }
 
+    public void step(World world, int x, int y){}
+
     // Constructor
     public Cell(String name, String description, float charge, float mass, Color color){
         this.name = name;
@@ -87,8 +89,6 @@ public class Cell {
 
     // Static functions
     static public Cell getEmpty(){ return new Cell("Empty", "", 0.f, 0.f, new Color(50, 50, 50)); }
-    static public Cell getDebug(){ return new Cell("Debug", "Used to testing", 1.f, 1.f, new Color(255, 255, 255)); }
-    static public Cell getElectron(){ return new Cell("Electron", "Basic electron", -1.f, 1.f, new Color(255, 0, 0)); }
     static public Cell getNeutron(){ return new Cell("Neutron", "Basic neutron", 0.f, 1.f, new Color(255, 255, 255)); }
     static public Cell getProton(){ return new Cell("Proton", "Basic proton", 1.f, 1.f, new Color(0, 255, 0)); }
 
