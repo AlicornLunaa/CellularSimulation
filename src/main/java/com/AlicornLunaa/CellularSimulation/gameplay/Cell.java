@@ -8,12 +8,12 @@ public class Cell {
 
     // Static variables
     public static final int SIZE = 10;
-    public enum CellType { EMPTY, ELECTRON, NEUTRON, PROTON };
+    public enum CellType { EMPTY, ELECTRON, NEUTRON, PROTON, MOLECULE };
 
     // Variables
-    private String name;
-    private String description;
-    private Color color;
+    protected String name;
+    protected String description;
+    protected Color color;
     protected float charge;
     protected float mass;
     protected Vector2i velocity;

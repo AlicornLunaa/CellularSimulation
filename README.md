@@ -9,3 +9,7 @@ Uses LWJGL
 - Space increments the simulation by one step
 - M1 selects
 - M2 deselects
+
+### Theory:
+Once cells are close enough to touch/stop moving, bind them all into a 
+molecule and treat them as one cell.
