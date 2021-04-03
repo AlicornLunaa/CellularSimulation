@@ -1,5 +1,6 @@
 package com.AlicornLunaa.CellularSimulation.gameplay;
 
+import com.AlicornLunaa.CellularSimulation.physics.Physics;
 import com.AlicornLunaa.CellularSimulation.rendering.Camera;
 import com.AlicornLunaa.CellularSimulation.rendering.CellRenderer;
 import com.AlicornLunaa.CellularSimulation.rendering.Shader;
@@ -14,6 +15,7 @@ public class World {
 
     // Variables
     private CellRenderer renderer;
+    private Physics physics;
     private Camera worldCamera;
     private Cell[][] grid;
 
@@ -38,6 +40,12 @@ public class World {
 
     public Cell getCell(int x, int y){ return grid[y][x]; }
 
+    public void swapCell(int x1, int y1, int x2, int y2){
+        Cell temp = grid[y1][x1];
+        grid[y1][x1] = grid[y2][x2];
+        grid[y2][x2] = temp;
+    }
+
     public void loopCells(CellLoopCallback func){
         for(int x = 0; x < grid[0].length; x++){
             for(int y = 0; y < grid.length; y++){
@@ -57,10 +65,15 @@ public class World {
 
     public Camera getCamera(){ return worldCamera; }
 
+    public void step(){
+        physics.step(this);
+    }
+
     // Constructor
     public World(int width, int height, int size){
         // Initialize grid
         renderer = new CellRenderer();
+        physics = new Physics();
         worldCamera = new Camera(width, height);
         grid = new Cell[size][size];
 

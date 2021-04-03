@@ -52,6 +52,10 @@ public class CellularSimulation extends Window {
                         }
                     });
                     break;
+
+                case GLFW_KEY_SPACE:
+                    world.step();
+                    break;
             }
         }
     }
