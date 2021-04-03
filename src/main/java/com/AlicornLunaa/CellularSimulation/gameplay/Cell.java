@@ -2,7 +2,7 @@ package com.AlicornLunaa.CellularSimulation.gameplay;
 
 import com.AlicornLunaa.CellularSimulation.rendering.Rectangle;
 import com.AlicornLunaa.CellularSimulation.util.Color;
-import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 public class Cell {
 
@@ -15,7 +15,7 @@ public class Cell {
     private Color color;
     protected float charge;
     protected float mass;
-    protected Vector2f velocity;
+    protected Vector2i velocity;
     private Rectangle shape;
 
     private Color highlightedColor;
@@ -51,11 +51,11 @@ public class Cell {
 
     public void setColor(Color c){ color = c; }
 
-    public Vector2f getVelocity() {
+    public Vector2i getVelocity() {
         return velocity;
     }
 
-    public void setVelocity(Vector2f velocity) {
+    public void setVelocity(Vector2i velocity) {
         this.velocity = velocity;
     }
 
@@ -79,7 +79,7 @@ public class Cell {
         this.mass = mass;
         this.color = color;
 
-        velocity = new Vector2f(0.f, 0.f);
+        velocity = new Vector2i(0, 0);
 
         shape = new Rectangle(0.f, 0.f, SIZE, SIZE);
 

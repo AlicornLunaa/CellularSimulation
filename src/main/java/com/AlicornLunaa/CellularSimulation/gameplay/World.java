@@ -5,6 +5,7 @@ import com.AlicornLunaa.CellularSimulation.rendering.Camera;
 import com.AlicornLunaa.CellularSimulation.rendering.CellRenderer;
 import com.AlicornLunaa.CellularSimulation.rendering.Shader;
 import com.AlicornLunaa.CellularSimulation.util.CellLoopCallback;
+import org.joml.Vector2i;
 import org.joml.Vector3f;
 
 // Holds every cell
@@ -81,6 +82,8 @@ public class World {
     }
 
     public Camera getCamera(){ return worldCamera; }
+
+    public Vector2i getSize(){ return new Vector2i(grid[0].length, grid.length); }
 
     public void step(){
         physics.step(this);
