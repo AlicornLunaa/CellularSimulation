@@ -13,6 +13,7 @@ public class CellularSimulation extends Window {
     // Variables
     private Gui gui;
     private World world;
+    private Texture tex;
     private Rectangle cursor;
 
     // Functions
@@ -54,6 +55,7 @@ public class CellularSimulation extends Window {
         // GUI render
         gui.getShader().use();
         gui.draw();
+        tex.use();
         cursor.draw(gui.getShader());
         gui.getShader().unuse();
     }
@@ -66,8 +68,9 @@ public class CellularSimulation extends Window {
         gui = new Gui(width, height);
         world = new World(width, height,50);
 
+        tex = new Texture("/textures/test.png");
         cursor = new Rectangle(0, 0, 10, 10);
-        cursor.color = new Color(255, 0, 255);
+        cursor.color = new Color(255, 0, 100);
 
         super.start();
     }

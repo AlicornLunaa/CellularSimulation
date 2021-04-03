@@ -23,7 +23,8 @@ public class Rectangle {
     private FloatBuffer matrixBuffer;
     private Matrix4f modelMatrix;
     private int vao;
-    private int vbo;
+    private int vboVertex;
+    private int vboTexCoord;
 
     private Vector3f position = new Vector3f();
     private Quaternionf orientation = new Quaternionf();
@@ -41,21 +42,37 @@ public class Rectangle {
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-        FloatBuffer buffer = BufferUtils.createFloatBuffer(3 * 6);
-        buffer.put(0.5f).put(0.5f).put(-0.5f);
-        buffer.put(0.5f).put(-0.5f).put(-0.5f);
-        buffer.put(-0.5f).put(-0.5f).put(-0.5f);
-        buffer.put(-0.5f).put(-0.5f).put(-0.5f);
-        buffer.put(-0.5f).put(0.5f).put(-0.5f);
-        buffer.put(0.5f).put(0.5f).put(-0.5f);
-        buffer.flip();
+        FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(3 * 6);
+        vertexBuffer.put(0.5f).put(0.5f).put(-0.5f); // Top right
+        vertexBuffer.put(0.5f).put(-0.5f).put(-0.5f); // Bottom right
+        vertexBuffer.put(-0.5f).put(-0.5f).put(-0.5f); // Bottom left
+        vertexBuffer.put(-0.5f).put(-0.5f).put(-0.5f); // Bottom left
+        vertexBuffer.put(-0.5f).put(0.5f).put(-0.5f); // Top left
+        vertexBuffer.put(0.5f).put(0.5f).put(-0.5f); // Top right
+        vertexBuffer.flip();
 
-        vbo = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+        FloatBuffer texCoordBuffer = BufferUtils.createFloatBuffer(2 * 6);
+        texCoordBuffer.put(1.f).put(1.f);
+        texCoordBuffer.put(1.f).put(0.f);
+        texCoordBuffer.put(0.f).put(0.f);
+        texCoordBuffer.put(0.f).put(0.f);
+        texCoordBuffer.put(0.f).put(1.f);
+        texCoordBuffer.put(1.f).put(1.f);
+        texCoordBuffer.flip();
+
+        vboVertex = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vboVertex);
+        glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0L);
 
+        vboTexCoord = glGenBuffers();
+        glBindBuffer(GL_ARRAY_BUFFER, vboTexCoord);
+        glBufferData(GL_ARRAY_BUFFER, texCoordBuffer, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0L);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 

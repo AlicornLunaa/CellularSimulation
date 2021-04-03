@@ -7,3 +7,4 @@ gradle/
 *.class
 /out/
 .idea_modules/
+*.log
