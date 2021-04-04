@@ -93,7 +93,7 @@ public class Rectangle {
 
     // Setters
     public void setPosition(Vector3f p){
-        position = p.add(new Vector3f(size.x / 2.f, size.y / 2.f, 0.f));
+        position = new Vector3f(p).add(new Vector3f(size.x / 2.f, size.y / 2.f, 0.f));
     }
 
     public void setRotation(Vector3f r){
