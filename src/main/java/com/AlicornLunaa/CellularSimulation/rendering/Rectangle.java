@@ -77,7 +77,7 @@ public class Rectangle {
     }
 
     public void draw(Shader shader){
-        modelMatrix.translationRotateScale(position, orientation, new Vector3f(size, 1.f));
+        modelMatrix.translationRotateScale(new Vector3f(position).add(size.x / 2.f, size.y / 2.f, 0.f), orientation, new Vector3f(size, 1.f));
         shader.setUniform("modelMatrix", modelMatrix.get(matrixBuffer));
         shader.setUniform("color", color);
 
@@ -93,7 +93,7 @@ public class Rectangle {
 
     // Setters
     public void setPosition(Vector3f p){
-        position = new Vector3f(p).add(new Vector3f(size.x / 2.f, size.y / 2.f, 0.f));
+        position = new Vector3f(p);
     }
 
     public void setRotation(Vector3f r){

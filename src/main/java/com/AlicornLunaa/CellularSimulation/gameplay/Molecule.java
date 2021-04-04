@@ -35,15 +35,23 @@ public class Molecule extends Cell {
         // Updates the positions of all the shapes
         Vector3f current = new Vector3f(getShape().getPosition());
         float spacer = (Cell.SIZE + World.CELL_SPACING);
+        current.sub(spacer * 2, spacer, 0);
 
         // Loop through all protons
+        int row = 0;
         for(int i = 0; i < protons; i++) {
+            int maxSquareSize = (int)Math.pow(i, 2);
+            System.out.println(maxSquareSize);
+            if(maxSquareSize % protons == 0) { row++; }
+
+            current.add(spacer * 2, spacer * row, 0);
             shapes.get(i).setPosition(current);
             shapes.get(i).draw(shader);
         }
 
         // Loop through all neutrons
         for(int i = protons; i < protons + neutrons; i++) {
+            current.set(0, 0, 0);
             shapes.get(i).setPosition(current);
             shapes.get(i).draw(shader);
         }

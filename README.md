@@ -13,3 +13,5 @@ Uses LWJGL
 ### Theory:
 Once cells are close enough to touch/stop moving, bind them all into a 
 molecule and treat them as one cell.
+
+Have each proton try to find at least one side of a neutron to bind to

@@ -65,7 +65,7 @@ public class CellularSimulation extends Window {
                     world.loopCells((int x, int y, Cell c) -> {
                         if(c.isHighlighted()){
                             c.highlight(false);
-                            world.setCell(x, y, new Molecule(2, 2, 2));
+                            world.setCell(x, y, new Molecule(6, 6, 6));
                         }
                     });
 
