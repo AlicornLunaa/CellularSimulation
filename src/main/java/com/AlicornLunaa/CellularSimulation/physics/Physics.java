@@ -60,38 +60,20 @@ public class Physics {
     }
 
     public void updateProton(CellGrid grid, int x, int y){
-        // Move towards neutrons
+        // Setup
         CellGrid nearby = grid.getNeighbors(x, y, 13);
-        nearby.loopCells((int x1, int y1, Cell c) -> {
-            c.highlight(true);
-        });
-//        for(int i = 0; i < nearby.length; i++){
-//            Cell c = nearby[i];
-//            int relY = i % radius;
-//            int relX = i / radius;
-//
-//            if(c == null) continue;
-//
-//            if(c.getType() == Cell.CellType.NEUTRON){
-//                Vector2f direction = new Vector2f(relX - radius / 2, relY - radius / 2);
-//
-//                // Try to re-arrange into an atomic nucleus
-//                if(Math.abs(direction.x) < 0 || Math.abs(direction.y) < 0){
-//                    // Create new molecule and bind them together
-//
-//                } else {
-//                    // Movement is allowed
-//                    if (Math.abs(direction.x) > Math.abs(direction.y)) {
-//                        // X is greater than the Y, therefore move in the X direction
-//                        moves.add(new Move(x, y, x + (int) Math.signum(direction.x), y));
-//                    } else {
-//                        // Y is greater than the X, therefore move in the Y direction
-//                        moves.add(new Move(x, y, x, y + (int) Math.signum(direction.y)));
-//                    }
-//                }
-//            }
-//        }
 
+        // Move away from protons
+        if(nearby.getCellOrigin(-1, 0).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x + 1, y)); } // Left
+        else if(nearby.getCellOrigin(0, 1).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x, y - 1)); } // Down
+        else if(nearby.getCellOrigin(1, 0).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x - 1, y)); } // Right
+        else if(nearby.getCellOrigin(0, -1).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x, y + 1)); } // Up
+
+        // Move away from neutron
+        if(nearby.getCellOrigin(-2, 0).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x - 1, y)); } // Left
+        else if(nearby.getCellOrigin(0, 2).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x, y + 1)); } // Down
+        else if(nearby.getCellOrigin(2, 0).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x + 1, y)); } // Right
+        else if(nearby.getCellOrigin(0, -2).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x, y - 1)); } // Up
     }
 
     public void step(CellGrid grid){

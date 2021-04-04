@@ -45,6 +45,7 @@ public class CellGrid {
 
     // Getters
     public Cell getCell(int x, int y){ return (x >= 0 && y >= 0 && x < width && y < height) ? cells[XY2ID(x, y)] : null; }
+    public Cell getCellOrigin(int x, int y){ return getCell(width / 2 + x, height / 2 + y); }
     public int getWidth(){ return width; }
     public int getHeight(){ return height; }
 
