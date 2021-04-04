@@ -24,48 +24,50 @@ public class CellularSimulation extends Window {
         N: Sets all selected to neutrons
         P: Sets all selected to protons
          */
+        CellGrid grid = world.getGrid();
+
         if(action == GLFW_PRESS){
             switch(key){
                 case GLFW_KEY_E:
-                    world.loopCells((int x, int y, Cell c) -> {
+                    grid.loopCells((int x, int y, Cell c) -> {
                         if(c.isHighlighted()){
                             c.highlight(false);
-                            world.setCell(x, y, new Electron());
+                            grid.setCell(new Electron(), x, y);
                         }
                     });
                     break;
 
                 case GLFW_KEY_N:
-                    world.loopCells((int x, int y, Cell c) -> {
+                    world.getGrid().loopCells((int x, int y, Cell c) -> {
                         if(c.isHighlighted()){
                             c.highlight(false);
-                            world.setCell(x, y, Cell.getNeutron());
+                            grid.setCell(Cell.getNeutron(), x, y);
                         }
                     });
                     break;
 
                 case GLFW_KEY_P:
-                    world.loopCells((int x, int y, Cell c) -> {
+                    grid.loopCells((int x, int y, Cell c) -> {
                         if(c.isHighlighted()){
                             c.highlight(false);
-                            world.setCell(x, y, Cell.getProton());
+                            grid.setCell(Cell.getProton(), x, y);
                         }
                     });
                     break;
 
                 case GLFW_KEY_DELETE:
-                    world.loopCells((int x, int y, Cell c) -> {
+                    grid.loopCells((int x, int y, Cell c) -> {
                         if(c.isHighlighted()){
                             c.highlight(false);
-                            world.setCell(x, y, Cell.getEmpty());
+                            grid.setCell(Cell.getEmpty(), x, y);
                         }
                     });
 
                 case GLFW_KEY_M:
-                    world.loopCells((int x, int y, Cell c) -> {
+                    grid.loopCells((int x, int y, Cell c) -> {
                         if(c.isHighlighted()){
                             c.highlight(false);
-                            world.setCell(x, y, new Molecule(6, 6, 6));
+                            grid.setCell(new Molecule(6, 6, 6), x, y);
                         }
                     });
 
@@ -85,9 +87,9 @@ public class CellularSimulation extends Window {
         cursor.setPosition(new Vector3f(xSelect * 11, ySelect * 11, 0.f));
 
         if(glfwGetMouseButton(windowHandle, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS){
-            world.getCell(xSelect, ySelect).highlight(true);
+            world.getGrid().getCell(xSelect, ySelect).highlight(true);
         } else if(glfwGetMouseButton(windowHandle, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS){
-            world.getCell(xSelect, ySelect).highlight(false);
+            world.getGrid().getCell(xSelect, ySelect).highlight(false);
         }
 
         // Cell render

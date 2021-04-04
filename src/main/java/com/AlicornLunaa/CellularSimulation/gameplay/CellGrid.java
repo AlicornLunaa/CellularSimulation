@@ -20,14 +20,12 @@ public class CellGrid {
         cells[XY2ID(x2, y2)] = temp;
     }
 
-    public CellGrid getSurrounding(int x, int y, int range){
+    public CellGrid getNeighbors(int x, int y, int range){
         CellGrid grid = new CellGrid(range, range);
 
-        for(int rX = -range/2; rX < range/2 + 1; rX++) for(int rY = -range/2; rY < range/2 + 1; rY++){
-            if(x + rX < 0 || y + rY < 0 || x + rX > width || y + rY > height){
-                grid.setCell(null, rX, rY);
-            } else {
-                grid.setCell(cells[XY2ID(x + rX, y + rY)], rX, rY);
+        for(int xOffset = 0; xOffset < range; xOffset++){
+            for(int yOffset = 0; yOffset < range; yOffset++){
+                grid.setCell(this.getCell(x + xOffset - range / 2, y + yOffset - range / 2), xOffset, yOffset);
             }
         }
 
@@ -46,7 +44,9 @@ public class CellGrid {
     public void setCell(Cell cell, int x, int y){ cells[XY2ID(x, y)] = cell; }
 
     // Getters
-    public Cell getCell(int x, int y){ return cells[XY2ID(x, y)]; }
+    public Cell getCell(int x, int y){ return (x >= 0 && y >= 0 && x < width && y < height) ? cells[XY2ID(x, y)] : null; }
+    public int getWidth(){ return width; }
+    public int getHeight(){ return height; }
 
     // Constructor
     public CellGrid(int width, int height){
@@ -54,6 +54,10 @@ public class CellGrid {
         this.height = height;
 
         cells = new Cell[width * height];
+
+        for(int i = 0; i < cells.length; i++){
+            cells[i] = Cell.getEmpty();
+        }
     }
 
 }
