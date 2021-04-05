@@ -54,6 +54,12 @@ public class World {
         physics = new Physics();
         worldCamera = new Camera(width, height);
         grid = new CellGrid(size, size);
+
+        // Test setup
+        grid.setCell(Cell.getProton(), 15, 15);
+        grid.setCell(Cell.getProton(), 16, 15);
+        grid.setCell(Cell.getProton(), 15, 16);
+        grid.setCell(Cell.getProton(), 16, 16);
     }
 
 }

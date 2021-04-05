@@ -64,16 +64,23 @@ public class Physics {
         CellGrid nearby = grid.getNeighbors(x, y, 13);
 
         // Move away from protons
-        if(nearby.getCellOrigin(-1, 0).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x + 1, y)); } // Left
-        else if(nearby.getCellOrigin(0, 1).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x, y - 1)); } // Down
-        else if(nearby.getCellOrigin(1, 0).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x - 1, y)); } // Right
-        else if(nearby.getCellOrigin(0, -1).getType() == Cell.CellType.PROTON){ moves.add(new Move(x, y, x, y + 1)); } // Up
+        int moveX = 0; int moveY = 0;
+
+        if(nearby.getCellOrigin(-1, 0).getType() == Cell.CellType.PROTON){ moveX++; } // Left
+        if(nearby.getCellOrigin(0, 1).getType() == Cell.CellType.PROTON){ moveY--; } // Down
+        if(nearby.getCellOrigin(1, 0).getType() == Cell.CellType.PROTON){ moveX--; } // Right
+        if(nearby.getCellOrigin(0, -1).getType() == Cell.CellType.PROTON){ moveY++; } // Up
 
         // Move away from neutron
-        if(nearby.getCellOrigin(-2, 0).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x - 1, y)); } // Left
-        else if(nearby.getCellOrigin(0, 2).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x, y + 1)); } // Down
-        else if(nearby.getCellOrigin(2, 0).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x + 1, y)); } // Right
-        else if(nearby.getCellOrigin(0, -2).getType() == Cell.CellType.NEUTRON){ moves.add(new Move(x, y, x, y - 1)); } // Up
+        if(nearby.getCellOrigin(-2, 0).getType() == Cell.CellType.NEUTRON){ moveX--; } // Left
+        if(nearby.getCellOrigin(0, 2).getType() == Cell.CellType.NEUTRON){ moveY++; } // Down
+        if(nearby.getCellOrigin(2, 0).getType() == Cell.CellType.NEUTRON){ moveX++; } // Right
+        if(nearby.getCellOrigin(0, -2).getType() == Cell.CellType.NEUTRON){ moveY--; } // Up
+
+        // Final movement
+        if(moveX != 0 || moveY != 0){
+            moves.add(new Move(x, y, x + moveX, y + moveY));
+        }
     }
 
     public void step(CellGrid grid){
