@@ -2,7 +2,6 @@ package com.AlicornLunaa.CellularSimulation.gameplay;
 
 import com.AlicornLunaa.CellularSimulation.rendering.*;
 import com.AlicornLunaa.CellularSimulation.util.*;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -15,15 +14,18 @@ public class Molecule extends Cell {
     private int electrons;
     private ArrayList<Rectangle> shapes = new ArrayList<Rectangle>();
 
+    private float nucleusDensity = 0.3f;
     private float electronSpacing = 10.f;
     private float animationTick = 0.f;
+    private float animationSpeed = 0.9f;
 
     // Functions
     private void getElectronPosition(Vector3f pos, int layer, int electronsInLayer, int electronNum){
+        float nucleusExclusionZone = (protons + neutrons) * nucleusDensity;
         float ratio = (360.f / electronsInLayer);
-        float cos = (float)Math.cos(Math.toRadians(electronNum * ratio + animationTick));
-        float sin = (float)Math.sin(Math.toRadians(electronNum * ratio + animationTick));
-        float space = electronSpacing * layer;
+        float cos = (float)Math.cos(Math.toRadians(electronNum * ratio + animationTick / layer)); // Division of animationTick by layer is to slow down further orbiting electrons
+        float sin = (float)Math.sin(Math.toRadians(electronNum * ratio + animationTick / layer));
+        float space = electronSpacing * layer + nucleusExclusionZone;
 
         pos.add(space * cos + space * sin, -space * sin + space * cos, 0.f);
     }
@@ -35,10 +37,12 @@ public class Molecule extends Cell {
         for(int i = 0; i < protons + neutrons + electrons; i++) {
             shapes.add(new Rectangle(0, 0, Cell.SIZE, Cell.SIZE));
 
-            if(i < protons){
+            if(i < protons + neutrons){
                 shapes.get(i).color = new Color(0, 255, 0);
-            } else if(i < protons + neutrons){
-                shapes.get(i).color = new Color(250, 250, 250);
+
+                if(i > protons && i % 2 == 0) {
+                    shapes.get(i).color = new Color(250, 250, 250);
+                }
             } else if(i < protons + neutrons + electrons){
                 shapes.get(i).color = new Color(255, 0, 0);
             }
@@ -48,50 +52,49 @@ public class Molecule extends Cell {
     private void drawShapes(Shader shader){
         // Updates the positions of all the shapes
         Vector3f current = new Vector3f(getShape().getPosition());
-        float spacer = (Cell.SIZE + World.CELL_SPACING);
+        Vector3f particlePos = new Vector3f(current);
 
-        // Loop through all protons
-        int row = 0;
-        for(int i = 0; i < protons; i++) {
-            shapes.get(i).setPosition(current);
-            shapes.get(i).draw(shader);
-        }
+        // Loop through the number of protons and neutrons
+        float currentDensity = 0.f;
+        for(int i = 0; i < protons + neutrons; i++) {
+            particlePos.set(current);
+            float cos = (float)Math.cos(Math.toRadians(137.5f * i)); // Division of animationTick by layer is to slow down further orbiting electrons
+            float sin = (float)Math.sin(Math.toRadians(137.5f * i));
+            particlePos.add(currentDensity * cos + currentDensity * sin, -currentDensity * sin + currentDensity * cos, 0.f);
+            currentDensity += nucleusDensity;
 
-        // Loop through all neutrons
-        for(int i = protons; i < protons + neutrons; i++) {
-            shapes.get(i).setPosition(current);
+            shapes.get(i).setPosition(particlePos);
             shapes.get(i).draw(shader);
         }
 
         // Loop through all electrons
-        Vector3f electronPos = new Vector3f(current);
         for(int i = protons + neutrons; i < protons + neutrons + electrons; i++) {
             // Get new electron information
-            electronPos.set(current);
+            particlePos.set(current);
             int electronNum = i - (protons + protons) + 1; // The id of the electron the molecule is looping on right now
 
             // Rotate electrons around nucleus for each layer
             if(electronNum <= 2){
                 // First layer
-                getElectronPosition(electronPos, 1, Math.min(electrons, 2), electronNum);
+                getElectronPosition(particlePos, 1, Math.min(electrons, 2), electronNum);
             } else if(electronNum - 2 <= 8){
                 // Second layer
-                getElectronPosition(electronPos, 2, Math.min(electrons - 2, 8), electronNum - 2);
+                getElectronPosition(particlePos, 2, Math.min(electrons - 2, 8), electronNum - 2);
             } else if(electronNum - 10 <= 18){
                 // Third layer
-                getElectronPosition(electronPos, 3, Math.min(electrons - 10, 18), electronNum - 8);
+                getElectronPosition(particlePos, 3, Math.min(electrons - 10, 18), electronNum - 8);
             } else if(electronNum - 28 <= 32){
                 // Fourth layer
-                getElectronPosition(electronPos, 4, Math.min(electrons - 28, 32), electronNum - 18);
+                getElectronPosition(particlePos, 4, Math.min(electrons - 28, 32), electronNum - 18);
             } else if(electronNum - 60 <= 50){
                 // Fifth layer
-                getElectronPosition(electronPos, 5, Math.min(electrons - 60, 50), electronNum - 32);
+                getElectronPosition(particlePos, 5, Math.min(electrons - 60, 50), electronNum - 32);
             } else {
                 // Sixth layer, purposely left unbound for gameplay fun
-                getElectronPosition(electronPos, 6, electrons - 110, electronNum - 50);
+                getElectronPosition(particlePos, 6, electrons - 110, electronNum - 50);
             }
 
-            shapes.get(i).setPosition(electronPos);
+            shapes.get(i).setPosition(particlePos);
             shapes.get(i).draw(shader);
         }
     }
@@ -105,7 +108,7 @@ public class Molecule extends Cell {
         // Draw self and then each proton, neutron, and electron
         super.draw(shader);
         drawShapes(shader);
-        animationTick += 0.4f;
+        animationTick += animationSpeed;
     }
 
     public void addProton(int count){ protons = Math.max(1, protons + count); createShapes(); }
