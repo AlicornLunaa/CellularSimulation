@@ -45,7 +45,7 @@ public class Camera {
 
         matrixBuffer = BufferUtils.createFloatBuffer(16);
         viewMatrix = new Matrix4f();
-        projMatrix = new Matrix4f().ortho(0, width, height, 0, -10, 10);
+        projMatrix = new Matrix4f().ortho(0, width, height, 0, -10.f, 10.f);
     }
 
 }

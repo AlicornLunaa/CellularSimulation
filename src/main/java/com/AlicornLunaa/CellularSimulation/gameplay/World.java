@@ -56,11 +56,7 @@ public class World {
         grid = new CellGrid(size, size);
 
         // Test setup
-        grid.setCell(Cell.getProton(), 15, 15);
-        grid.setCell(Cell.getProton(), 16, 15);
-        grid.setCell(Cell.getProton(), 15, 16);
-        grid.setCell(Cell.getProton(), 16, 16);
-        grid.setCell(new Molecule(92, 146, 92), 49, 49);
+        grid.setCell(new Molecule(2, 2, 2), 25, 18);
     }
 
 }

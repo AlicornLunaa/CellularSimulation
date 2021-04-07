@@ -51,7 +51,7 @@ public class Molecule extends Cell {
 
     private void drawShapes(Shader shader){
         // Updates the positions of all the shapes
-        Vector3f current = new Vector3f(getShape().getPosition());
+        Vector3f current = new Vector3f(getShape().getPosition()); current.add(0.f, 0.f, 1.f);
         Vector3f particlePos = new Vector3f(current);
 
         // Loop through the number of protons and neutrons
