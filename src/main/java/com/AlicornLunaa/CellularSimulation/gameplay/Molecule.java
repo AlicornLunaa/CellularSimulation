@@ -15,17 +15,17 @@ public class Molecule extends Cell {
     private ArrayList<Rectangle> shapes = new ArrayList<Rectangle>();
 
     private float nucleusDensity = 0.2f;
+    private float influenceSphere = 0.f;
     private float electronSpacing = 10.f;
     private float animationTick = 0.f;
     private float animationSpeed = 0.9f;
 
     // Functions
     private void getElectronPosition(Vector3f pos, int layer, int electronsInLayer, int electronNum){
-        float nucleusExclusionZone = (protons + neutrons) * nucleusDensity;
         float ratio = (360.f / electronsInLayer);
         float cos = (float)Math.cos(Math.toRadians(electronNum * ratio + animationTick / layer)); // Division of animationTick by layer is to slow down further orbiting electrons
         float sin = (float)Math.sin(Math.toRadians(electronNum * ratio + animationTick / layer));
-        float space = electronSpacing * layer + nucleusExclusionZone;
+        float space = electronSpacing * layer + influenceSphere;
 
         pos.add(space * cos + space * sin, -space * sin + space * cos, 0.f);
     }
@@ -54,6 +54,8 @@ public class Molecule extends Cell {
         Vector3f current = new Vector3f(getShape().getPosition()); current.add(0.f, 0.f, 1.f);
         Vector3f particlePos = new Vector3f(current);
 
+        influenceSphere = (protons + neutrons) * nucleusDensity;
+
         // Loop through the number of protons and neutrons
         float currentDensity = 0.f;
         for(int i = 0; i < protons + neutrons; i++) {
@@ -67,7 +69,10 @@ public class Molecule extends Cell {
             shapes.get(i).draw(shader);
         }
 
+        influenceSphere += electronSpacing;
+
         // Loop through all electrons
+        float electronSphere = 0.f;
         for(int i = protons + neutrons; i < protons + neutrons + electrons; i++) {
             // Get new electron information
             particlePos.set(current);
@@ -77,26 +82,34 @@ public class Molecule extends Cell {
             if(electronNum <= 2){
                 // First layer
                 getElectronPosition(particlePos, 1, Math.min(electrons, 2), electronNum);
+                electronSphere = electronSpacing * 2;
             } else if(electronNum - 2 <= 8){
                 // Second layer
                 getElectronPosition(particlePos, 2, Math.min(electrons - 2, 8), electronNum - 2);
+                electronSphere = electronSpacing * 4;
             } else if(electronNum - 10 <= 18){
                 // Third layer
                 getElectronPosition(particlePos, 3, Math.min(electrons - 10, 18), electronNum - 8);
+                electronSphere = electronSpacing * 6;
             } else if(electronNum - 28 <= 32){
                 // Fourth layer
                 getElectronPosition(particlePos, 4, Math.min(electrons - 28, 32), electronNum - 18);
+                electronSphere = electronSpacing * 8;
             } else if(electronNum - 60 <= 50){
                 // Fifth layer
                 getElectronPosition(particlePos, 5, Math.min(electrons - 60, 50), electronNum - 32);
+                electronSphere = electronSpacing * 10;
             } else {
                 // Sixth layer, purposely left unbound for gameplay fun
                 getElectronPosition(particlePos, 6, electrons - 110, electronNum - 50);
+                electronSphere = electronSpacing * 12;
             }
 
             shapes.get(i).setPosition(particlePos);
             shapes.get(i).draw(shader);
         }
+
+        influenceSphere += electronSphere;
     }
 
     public String toString(){
@@ -114,6 +127,8 @@ public class Molecule extends Cell {
     public void addProton(int count){ protons = Math.max(1, protons + count); createShapes(); }
     public void addNeutron(int count){ neutrons = Math.max(1, neutrons + count); createShapes(); }
     public void addElectron(int count){ electrons = Math.max(1, electrons + count); createShapes(); }
+
+    public float getInfluenceSphere(){ return influenceSphere; }
 
     // Constructor
     public Molecule(int protonCount, int neutronCount, int electronCount){

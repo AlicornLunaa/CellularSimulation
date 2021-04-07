@@ -74,11 +74,11 @@ public class CellularSimulation extends Window {
                     break;
 
                 case GLFW_KEY_1:
-                    ((Molecule)grid.getCell(49, 49)).addElectron(1);
+                    ((Molecule)grid.getCell(25, 18)).addElectron(1);
                     break;
 
                 case GLFW_KEY_2:
-                    ((Molecule)grid.getCell(49, 49)).addElectron(-1);
+                    ((Molecule)grid.getCell(25, 18)).addElectron(-1);
                     break;
 
                 case GLFW_KEY_SPACE:
