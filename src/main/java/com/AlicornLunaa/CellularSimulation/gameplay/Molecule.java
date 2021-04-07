@@ -14,7 +14,7 @@ public class Molecule extends Cell {
     private int electrons;
     private ArrayList<Rectangle> shapes = new ArrayList<Rectangle>();
 
-    private float nucleusDensity = 0.3f;
+    private float nucleusDensity = 0.2f;
     private float electronSpacing = 10.f;
     private float animationTick = 0.f;
     private float animationSpeed = 0.9f;
@@ -71,7 +71,7 @@ public class Molecule extends Cell {
         for(int i = protons + neutrons; i < protons + neutrons + electrons; i++) {
             // Get new electron information
             particlePos.set(current);
-            int electronNum = i - (protons + protons) + 1; // The id of the electron the molecule is looping on right now
+            int electronNum = i - (protons + neutrons) + 1; // The id of the electron the molecule is looping on right now
 
             // Rotate electrons around nucleus for each layer
             if(electronNum <= 2){

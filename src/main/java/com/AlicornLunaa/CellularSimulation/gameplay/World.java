@@ -60,7 +60,7 @@ public class World {
         grid.setCell(Cell.getProton(), 16, 15);
         grid.setCell(Cell.getProton(), 15, 16);
         grid.setCell(Cell.getProton(), 16, 16);
-        grid.setCell(new Molecule(6,6,6), 49, 49);
+        grid.setCell(new Molecule(92, 146, 92), 49, 49);
     }
 
 }
