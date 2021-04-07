@@ -15,3 +15,6 @@ Once cells are close enough to touch/stop moving, bind them all into a
 molecule and treat them as one cell.
 
 Have each proton try to find at least one side of a neutron to bind to
+
+Check if the corner of each protons has more neutrons that it can move
+to. Try ti get to the spot with the most sides covered by a neutron

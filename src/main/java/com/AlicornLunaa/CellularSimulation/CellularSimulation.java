@@ -62,6 +62,7 @@ public class CellularSimulation extends Window {
                             grid.setCell(Cell.getEmpty(), x, y);
                         }
                     });
+                    break;
 
                 case GLFW_KEY_M:
                     grid.loopCells((int x, int y, Cell c) -> {
@@ -70,6 +71,15 @@ public class CellularSimulation extends Window {
                             grid.setCell(new Molecule(6, 6, 6), x, y);
                         }
                     });
+                    break;
+
+                case GLFW_KEY_1:
+                    ((Molecule)grid.getCell(49, 49)).addElectron(1);
+                    break;
+
+                case GLFW_KEY_2:
+                    ((Molecule)grid.getCell(49, 49)).addElectron(-1);
+                    break;
 
                 case GLFW_KEY_SPACE:
                     world.step();
