@@ -16,7 +16,7 @@ public class Molecule extends Cell {
 
     private float nucleusDensity = 0.2f;
     private float influenceSphere = 0.f;
-    private float electronSpacing = 10.f;
+    private float electronSpacing = 15.f;
     private float animationTick = 0.f;
     private float animationSpeed = 0.9f;
 
@@ -65,6 +65,10 @@ public class Molecule extends Cell {
             particlePos.add(currentDensity * cos + currentDensity * sin, -currentDensity * sin + currentDensity * cos, 0.f);
             currentDensity += nucleusDensity;
 
+            // Round to 11th to keep inline with grid
+            particlePos.x = ((int)(particlePos.x / 11 + 0.5f)) * 11;
+            particlePos.y = ((int)(particlePos.y / 11 + 0.5f)) * 11;
+
             shapes.get(i).setPosition(particlePos);
             shapes.get(i).draw(shader);
         }
@@ -104,6 +108,10 @@ public class Molecule extends Cell {
                 getElectronPosition(particlePos, 6, electrons - 110, electronNum - 50);
                 electronSphere = electronSpacing * 12;
             }
+
+            // Round to 11th to keep inline with grid
+            particlePos.x = ((int)(particlePos.x / 11 + 0.5f)) * 11;
+            particlePos.y = ((int)(particlePos.y / 11 + 0.5f)) * 11;
 
             shapes.get(i).setPosition(particlePos);
             shapes.get(i).draw(shader);

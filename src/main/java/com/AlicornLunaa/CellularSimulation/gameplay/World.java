@@ -56,7 +56,7 @@ public class World {
         grid = new CellGrid(size, size);
 
         // Test setup
-        grid.setCell(new Molecule(2, 2, 2), 25, 18);
+        grid.setCell(new Molecule(92,92,92), 25, 18);
     }
 
 }
