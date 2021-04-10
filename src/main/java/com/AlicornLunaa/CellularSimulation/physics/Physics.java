@@ -15,25 +15,82 @@ public class Physics {
     // Functions
     public void updateElectron(CellGrid grid, int x, int y){
         // Move towards protons and away from electrons
+        Cell cell = grid.getCell(x, y);
         CellGrid nearby = grid.getNeighbors(x, y, 13);
+        Vector2i center = nearby.getCenter();
 
+        // Electron velocity update
+        nearby.loopCells((int mX, int mY, Cell c) -> {
+            // Skip self
+            if(mX == center.x && mY == center.y){ return; }
+            int xDir = center.x - mX; int yDir = center.y - mY;
+
+            // Check types
+            switch(c.getType()){
+                case ELECTRON:
+                    // Increment velocity by this number
+                    cell.getVelocity().add(xDir / 2, yDir / 2);
+                    break;
+
+                case PROTON:
+                    // Increment velocity by this number
+                    cell.getVelocity().add(xDir / -2, yDir / -2);
+                    break;
+            }
+        });
     }
 
     public void updateNeutron(CellGrid grid, int x, int y){
-        // Move towards
+        // Move towards protons but in a small radius
+        Cell cell = grid.getCell(x, y);
+        CellGrid nearby = grid.getNeighbors(x, y, 7);
+        Vector2i center = nearby.getCenter();
 
+        // Neutron velocity update
+        nearby.loopCells((int mX, int mY, Cell c) -> {
+            // Skip self
+            if(mX == center.x && mY == center.y){ return; }
+            int xDir = center.x - mX; int yDir = center.y - mY;
+
+            // Check types
+            if(c.getType() == Cell.CellType.PROTON){
+                // Increment velocity by this number
+                cell.getVelocity().add(-xDir, -yDir);
+            }
+        });
     }
 
     public void updateProton(CellGrid grid, int x, int y){
-        // Setup
+        // Move away from protons and towards electrons
+        Cell cell = grid.getCell(x, y);
         CellGrid nearby = grid.getNeighbors(x, y, 13);
+        Vector2i center = nearby.getCenter();
 
+        // Proton velocity update
+        nearby.loopCells((int mX, int mY, Cell c) -> {
+            // Skip self
+            if(mX == center.x && mY == center.y){ return; }
+            int xDir = center.x - mX; int yDir = center.y - mY;
+
+            // Check types
+            switch(c.getType()){
+                case PROTON:
+                    // Increment velocity by this number
+                    cell.getVelocity().add(xDir / 2, yDir / 2);
+                    break;
+
+                case ELECTRON:
+                    // Increment velocity by this number
+                    cell.getVelocity().add(xDir / -2, yDir / -2);
+                    break;
+            }
+        });
     }
 
     public void updateVelocity(CellGrid grid, int x, int y){
         // Setup
         Cell cell = grid.getCell(x, y);
-        int areaInfluenced = Math.max(cell.getVelocity().x, cell.getVelocity().y);
+        int areaInfluenced = Math.max(Math.abs(cell.getVelocity().x), Math.abs(cell.getVelocity().y));
 
         if(areaInfluenced == 0){ return; } // Skip if not moving anywhere
 
@@ -41,7 +98,7 @@ public class Physics {
         CellGrid nearby = grid.getNeighbors(x, y, areaInfluenced);
 
         // Get slope to the simplest form as well as the magnitude. Increment by the slope by magnitude times
-        int gcd = MathUtil.gcd(cell.getVelocity().x, cell.getVelocity().y);
+        int gcd = MathUtil.gcd(Math.abs(cell.getVelocity().x), Math.abs(cell.getVelocity().y));
         Vector2i slope = new Vector2i(cell.getVelocity()).div(gcd);
 
         // Iterate over the amount of times of the slope
@@ -75,8 +132,12 @@ public class Physics {
                 default:
                     break;
             }
+        });
 
-            updateVelocity(grid, x, y);
+        grid.loopCells((int x, int y, Cell c) -> {
+            if(c.getType() != Cell.CellType.EMPTY){
+                updateVelocity(grid, x, y);
+            }
         });
 
         for(Move m : moves){

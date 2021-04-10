@@ -48,6 +48,7 @@ public class CellGrid {
     public Cell getCellOrigin(int x, int y){ return getCell(width / 2 + x, height / 2 + y); }
     public int getWidth(){ return width; }
     public int getHeight(){ return height; }
+    public Vector2i getCenter(){ return new Vector2i(width / 2, height / 2); }
 
     // Constructor
     public CellGrid(int width, int height){

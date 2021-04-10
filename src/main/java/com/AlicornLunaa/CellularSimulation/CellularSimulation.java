@@ -141,7 +141,7 @@ public class CellularSimulation extends Window {
 
         Input.init(windowHandle);
         gui = new Gui(width, height);
-        world = new World(width, height,50);
+        world = new World(width, height,70);
 
         tex = new Texture("/textures/cursor.png");
         cursor = new Rectangle(0, 0, 10, 10);
