@@ -89,6 +89,14 @@ public class CellularSimulation extends Window {
                     ((Molecule)grid.getCell(25, 18)).addProton(-1);
                     break;
 
+                case GLFW_KEY_5:
+                    ((Molecule)grid.getCell(25, 18)).addNeutron(1);
+                    break;
+
+                case GLFW_KEY_6:
+                    ((Molecule)grid.getCell(25, 18)).addNeutron(-1);
+                    break;
+
                 case GLFW_KEY_LEFT:
                     grid.swapCell(25, 18, 30, 30);
                     break;

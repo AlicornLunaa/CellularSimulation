@@ -138,6 +138,8 @@ public class Molecule extends Cell {
 
     public float getInfluenceSphere(){ return influenceSphere; }
 
+    public ElementInfo getInfo(){ return ElementUtil.getInfo(protons, neutrons, electrons); }
+
     // Constructor
     public Molecule(int protonCount, int neutronCount, int electronCount){
         super("Molecule", "A collections of atoms", 0, 0, new Color(200, 200, 200), CellType.MOLECULE);
