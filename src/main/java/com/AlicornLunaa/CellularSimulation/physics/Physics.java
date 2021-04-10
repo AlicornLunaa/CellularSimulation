@@ -1,7 +1,9 @@
 package com.AlicornLunaa.CellularSimulation.physics;
 
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
+import com.AlicornLunaa.CellularSimulation.util.MathUtil;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 import java.util.ArrayList;
 
@@ -15,43 +17,6 @@ public class Physics {
         // Move towards protons and away from electrons
         CellGrid nearby = grid.getNeighbors(x, y, 13);
 
-//        for(int i = 0; i < ; i++){
-//            Cell c = nearby[i];
-//            int relY = i % radius;
-//            int relX = i / radius;
-//
-//            if(c == null) continue;
-//
-//            if(c.getType() == Cell.CellType.ELECTRON){
-//                Vector2f direction = new Vector2f(relX - radius / 2, relY - radius / 2);
-//                direction.negate();
-//
-//                // Movement is allowed
-//                if (Math.abs(direction.x) > Math.abs(direction.y)) {
-//                    // X is greater than the Y, therefore move in the X direction
-//                    moves.add(new Move(x, y, x + (int) Math.signum(direction.x), y));
-//                } else {
-//                    // Y is greater than the X, therefore move in the Y direction
-//                    moves.add(new Move(x, y, x, y + (int) Math.signum(direction.y)));
-//                }
-//            } else if(c.getType() == Cell.CellType.PROTON){
-//                Vector2f direction = new Vector2f(relX - radius / 2, relY - radius / 2);
-//
-//                // Stop movement if less than 2 distance
-//                if(Math.abs(direction.x) < 1 || Math.abs(direction.y) < 1){
-//
-//                } else {
-//                    // Movement is allowed
-//                    if (Math.abs(direction.x) > Math.abs(direction.y)) {
-//                        // X is greater than the Y, therefore move in the X direction
-//                        moves.add(new Move(x, y, x + (int) Math.signum(direction.x), y));
-//                    } else {
-//                        // Y is greater than the X, therefore move in the Y direction
-//                        moves.add(new Move(x, y, x, y + (int) Math.signum(direction.y)));
-//                    }
-//                }
-//            }
-//        }
     }
 
     public void updateNeutron(CellGrid grid, int x, int y){
@@ -63,24 +28,36 @@ public class Physics {
         // Setup
         CellGrid nearby = grid.getNeighbors(x, y, 13);
 
-        // Move away from protons
-        int moveX = 0; int moveY = 0;
+    }
 
-        if(nearby.getCellOrigin(-1, 0).getType() == Cell.CellType.PROTON){ moveX++; } // Left
-        if(nearby.getCellOrigin(0, 1).getType() == Cell.CellType.PROTON){ moveY--; } // Down
-        if(nearby.getCellOrigin(1, 0).getType() == Cell.CellType.PROTON){ moveX--; } // Right
-        if(nearby.getCellOrigin(0, -1).getType() == Cell.CellType.PROTON){ moveY++; } // Up
+    public void updateVelocity(CellGrid grid, int x, int y){
+        // Setup
+        Cell cell = grid.getCell(x, y);
+        int areaInfluenced = Math.max(cell.getVelocity().x, cell.getVelocity().y);
 
-        // Move away from neutron
-        if(nearby.getCellOrigin(-2, 0).getType() == Cell.CellType.NEUTRON){ moveX--; } // Left
-        if(nearby.getCellOrigin(0, 2).getType() == Cell.CellType.NEUTRON){ moveY++; } // Down
-        if(nearby.getCellOrigin(2, 0).getType() == Cell.CellType.NEUTRON){ moveX++; } // Right
-        if(nearby.getCellOrigin(0, -2).getType() == Cell.CellType.NEUTRON){ moveY--; } // Up
+        if(areaInfluenced == 0){ return; } // Skip if not moving anywhere
 
-        // Final movement
-        if(moveX != 0 || moveY != 0){
-            moves.add(new Move(x, y, x + moveX, y + moveY));
+        Vector2i artificalPosition = new Vector2i(x, y);
+        CellGrid nearby = grid.getNeighbors(x, y, areaInfluenced);
+
+        // Get slope to the simplest form as well as the magnitude. Increment by the slope by magnitude times
+        int gcd = MathUtil.gcd(cell.getVelocity().x, cell.getVelocity().y);
+        Vector2i slope = new Vector2i(cell.getVelocity()).div(gcd);
+
+        // Iterate over the amount of times of the slope
+        for(int i = 0; i < gcd; i++){
+            artificalPosition.add(slope);
+
+            // Collision check
+            if(grid.getCell(artificalPosition.x, artificalPosition.y).getType() != Cell.CellType.EMPTY){
+                artificalPosition.sub(slope);
+                break;
+            }
         }
+
+        // Add to moves if the position is different than current pos
+        if(x == artificalPosition.x && y == artificalPosition.y){ return; }
+        moves.add(new Move(x, y, artificalPosition.x, artificalPosition.y));
     }
 
     public void step(CellGrid grid){
@@ -98,6 +75,8 @@ public class Physics {
                 default:
                     break;
             }
+
+            updateVelocity(grid, x, y);
         });
 
         for(Move m : moves){
