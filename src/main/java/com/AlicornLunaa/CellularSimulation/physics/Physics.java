@@ -65,10 +65,12 @@ public class Physics {
         Cell cell = grid.getCell(x, y);
         CellGrid nearby = grid.getNeighbors(x, y, 13);
         Vector2i center = nearby.getCenter();
+        final boolean[] exists = {true};
 
         // Proton velocity update
         nearby.loopCells((int mX, int mY, Cell c) -> {
             // Skip self
+            if(!exists[0]){ return; }
             if(mX == center.x && mY == center.y){ return; }
             int xDir = center.x - mX; int yDir = center.y - mY;
 
@@ -82,6 +84,14 @@ public class Physics {
                 case ELECTRON:
                     // Increment velocity by this number
                     cell.getVelocity().add(xDir / -2, yDir / -2);
+
+                    // If cell distance is under 2, convert to molecule
+                    if(xDir <= 2 && yDir <= 2){
+                        grid.setCell(Cell.getEmpty(), (mX - center.x) + x, (mY - center.y) + y);
+                        grid.setCell(Cell.getEmpty(), x, y);
+                        grid.setCell(new Molecule(1, 0, 1), x, y);
+                        exists[0] = false;
+                    }
                     break;
             }
         });
