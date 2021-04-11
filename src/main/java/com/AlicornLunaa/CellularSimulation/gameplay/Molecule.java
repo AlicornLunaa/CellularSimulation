@@ -136,6 +136,10 @@ public class Molecule extends Cell {
     public void addNeutron(int count){ neutrons = Math.max(1, neutrons + count); createShapes(); }
     public void addElectron(int count){ electrons = Math.max(1, electrons + count); createShapes(); }
 
+    public int getProtons(){ return protons; }
+    public int getNeutrons(){ return neutrons; }
+    public int getElectrons(){ return electrons; }
+
     public float getInfluenceSphere(){ return influenceSphere; }
 
     public ElementInfo getInfo(){ return ElementUtil.getInfo(protons, neutrons, electrons); }

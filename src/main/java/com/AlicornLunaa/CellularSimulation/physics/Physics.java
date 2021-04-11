@@ -97,6 +97,43 @@ public class Physics {
         });
     }
 
+    public void updateMolecule(CellGrid grid, int x, int y){
+        // Setup
+        Molecule molecule = (Molecule)grid.getCell(x, y);
+        CellGrid nearby = grid.getNeighbors(x, y, (int)molecule.getInfluenceSphere());
+        Vector2i center = nearby.getCenter();
+
+        nearby.loopCells((int mX, int mY, Cell c) -> {
+            // Count each type and add accordingly
+            if(c == null){ return; }
+            if(mX == center.x && mY == center.y){ return; }
+            int gridSpaceX = (mX - center.x) + x;
+            int gridSpaceY = (mY - center.y) + y;
+
+            switch(c.getType()){
+                case PROTON:
+                    molecule.addProton(1);
+                    grid.setCell(Cell.getEmpty(), gridSpaceX, gridSpaceY);
+                    break;
+                case NEUTRON:
+                    molecule.addNeutron(1);
+                    grid.setCell(Cell.getEmpty(), gridSpaceX, gridSpaceY);
+                    break;
+                case ELECTRON:
+                    molecule.addElectron(1);
+                    grid.setCell(Cell.getEmpty(), gridSpaceX, gridSpaceY);
+                    break;
+                case MOLECULE:
+                    Molecule m = (Molecule)c;
+                    molecule.addProton(m.getProtons());
+                    molecule.addNeutron(m.getNeutrons());
+                    molecule.addElectron(m.getElectrons());
+                    grid.setCell(Cell.getEmpty(), gridSpaceX, gridSpaceY);
+                    break;
+            }
+        });
+    }
+
     public void updateVelocity(CellGrid grid, int x, int y){
         // Setup
         Cell cell = grid.getCell(x, y);
@@ -138,6 +175,9 @@ public class Physics {
                     break;
                 case PROTON:
                     updateProton(grid, x, y);
+                    break;
+                case MOLECULE:
+                    updateMolecule(grid, x, y);
                     break;
                 default:
                     break;
