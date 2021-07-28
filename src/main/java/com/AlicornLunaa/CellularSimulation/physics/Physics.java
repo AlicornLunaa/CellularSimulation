@@ -74,6 +74,11 @@ public class Physics {
             if(mX == center.x && mY == center.y){ return; }
             int xDir = center.x - mX; int yDir = center.y - mY;
 
+            // If its null, its a wall
+            if(c == null){
+                return;
+            }
+
             // Check types
             switch(c.getType()){
                 case PROTON:
@@ -153,7 +158,8 @@ public class Physics {
             artificalPosition.add(slope);
 
             // Collision check
-            if(grid.getCell(artificalPosition.x, artificalPosition.y).getType() != Cell.CellType.EMPTY){
+            Cell cellToCheck = grid.getCell(artificalPosition.x, artificalPosition.y);
+            if(cellToCheck == null || cellToCheck.getType() != Cell.CellType.EMPTY){
                 artificalPosition.sub(slope);
                 break;
             }

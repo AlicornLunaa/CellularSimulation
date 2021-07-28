@@ -2,6 +2,7 @@ package com.AlicornLunaa.CellularSimulation;
 
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
 import com.AlicornLunaa.CellularSimulation.rendering.*;
+import com.AlicornLunaa.CellularSimulation.rendering.text.Font;
 import com.AlicornLunaa.CellularSimulation.util.*;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -148,6 +149,8 @@ public class CellularSimulation extends Window {
         cursor.color = new Color(255, 0, 100);
 
         super.start();
+
+        //Font font("");
     }
 
     // Entry

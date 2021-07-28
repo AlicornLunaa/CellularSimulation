@@ -106,4 +106,5 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-zstd::$lwjglNatives"
     
     compile "org.joml:joml:${jomlVersion}"
+    compile 'commons-io:commons-io:2.8.0'
 }

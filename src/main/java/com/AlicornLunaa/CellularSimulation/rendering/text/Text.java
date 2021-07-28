@@ -1,5 +1,6 @@
-package com.AlicornLunaa.CellularSimulation.rendering;
+package com.AlicornLunaa.CellularSimulation.rendering.text;
 
+import com.AlicornLunaa.CellularSimulation.rendering.Shader;
 import org.joml.Vector2f;
 
 public class Text {

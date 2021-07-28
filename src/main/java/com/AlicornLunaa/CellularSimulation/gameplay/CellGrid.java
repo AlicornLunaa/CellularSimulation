@@ -1,6 +1,7 @@
 package com.AlicornLunaa.CellularSimulation.gameplay;
 
 import com.AlicornLunaa.CellularSimulation.util.CellLoopCallback;
+import com.AlicornLunaa.CellularSimulation.util.Color;
 import org.joml.Vector2i;
 
 public class CellGrid {

@@ -140,7 +140,7 @@ public class Molecule extends Cell {
     public int getNeutrons(){ return neutrons; }
     public int getElectrons(){ return electrons; }
 
-    public float getInfluenceSphere(){ return influenceSphere; }
+    public float getInfluenceSphere(){ return influenceSphere / 10; }
 
     public ElementInfo getInfo(){ return ElementUtil.getInfo(protons, neutrons, electrons); }
 
