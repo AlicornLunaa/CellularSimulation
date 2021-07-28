@@ -17,6 +17,9 @@ public class CellularSimulation extends Window {
     private Texture tex;
     private Rectangle cursor;
 
+    private long lastUpdate;
+    private long timeStep;
+
     // Functions
     @Override
     public void keypress(int key, int scancode, int action, int mods){
@@ -123,6 +126,12 @@ public class CellularSimulation extends Window {
             world.getGrid().getCell(xSelect, ySelect).highlight(false);
         }
 
+        // Physics update with selected time-scale
+        if (lastUpdate < System.currentTimeMillis() - timeStep){
+            world.step();
+            lastUpdate = System.currentTimeMillis();
+        }
+
         // Cell render
         world.getShader().use();
         world.draw();
@@ -147,6 +156,9 @@ public class CellularSimulation extends Window {
         tex = new Texture("/textures/cursor.png");
         cursor = new Rectangle(0, 0, 10, 10);
         cursor.color = new Color(255, 0, 100);
+
+        lastUpdate = System.currentTimeMillis();
+        timeStep = 150; // Physics time-scale
 
         super.start();
 
