@@ -1,36 +1,19 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 group 'com.alicornlunaa'
-version '1.1-SNAPSHOT'
+version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
-project.ext.lwjglVersion = "3.2.3"
+project.ext.lwjglVersion = "3.3.1"
+project.ext.jomlVersion = "1.10.4"
 project.ext.lwjglNatives = "natives-windows"
-
-project.ext.jomlVersion = "1.10.0"
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'com.AlicornLunaa.CellularSimulation.CellularSimulation'
-        )
-    }
-}
 
 repositories {
     mavenCentral()
-
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation group: 'org.l33tlabs.twl', name: 'pngdecoder', version: '1.0'
 
@@ -47,6 +30,7 @@ dependencies {
     implementation "org.lwjgl:lwjgl-lmdb"
     implementation "org.lwjgl:lwjgl-lz4"
     implementation "org.lwjgl:lwjgl-meow"
+    implementation "org.lwjgl:lwjgl-meshoptimizer"
     implementation "org.lwjgl:lwjgl-nanovg"
     implementation "org.lwjgl:lwjgl-nfd"
     implementation "org.lwjgl:lwjgl-nuklear"
@@ -56,12 +40,14 @@ dependencies {
     implementation "org.lwjgl:lwjgl-opengl"
     implementation "org.lwjgl:lwjgl-opengles"
     implementation "org.lwjgl:lwjgl-openvr"
+    implementation "org.lwjgl:lwjgl-openxr"
     implementation "org.lwjgl:lwjgl-opus"
     implementation "org.lwjgl:lwjgl-ovr"
     implementation "org.lwjgl:lwjgl-par"
     implementation "org.lwjgl:lwjgl-remotery"
     implementation "org.lwjgl:lwjgl-rpmalloc"
     implementation "org.lwjgl:lwjgl-shaderc"
+    implementation "org.lwjgl:lwjgl-spvc"
     implementation "org.lwjgl:lwjgl-sse"
     implementation "org.lwjgl:lwjgl-stb"
     implementation "org.lwjgl:lwjgl-tinyexr"
@@ -82,6 +68,7 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-lmdb::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-lz4::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-meow::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-meshoptimizer::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-nuklear::$lwjglNatives"
@@ -89,12 +76,14 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-opengles::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-openvr::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-openxr::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-opus::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-ovr::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-par::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-remotery::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-rpmalloc::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-shaderc::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-spvc::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-sse::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-tinyexr::$lwjglNatives"
@@ -104,7 +93,5 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-xxhash::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-yoga::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-zstd::$lwjglNatives"
-    
-    compile "org.joml:joml:${jomlVersion}"
-    compile 'commons-io:commons-io:2.8.0'
+    implementation "org.joml:joml:${jomlVersion}"
 }

@@ -1,9 +1,12 @@
 package com.AlicornLunaa.CellularSimulation;
 
 import com.AlicornLunaa.CellularSimulation.gameplay.*;
-import com.AlicornLunaa.CellularSimulation.rendering.*;
-import com.AlicornLunaa.CellularSimulation.rendering.text.Font;
-import com.AlicornLunaa.CellularSimulation.util.*;
+import com.AlicornLunaa.CellularSimulation.rendering.Rectangle;
+import com.AlicornLunaa.CellularSimulation.rendering.Texture;
+import com.AlicornLunaa.CellularSimulation.rendering.Window;
+import com.AlicornLunaa.CellularSimulation.util.Color;
+import com.AlicornLunaa.CellularSimulation.util.Input;
+
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
